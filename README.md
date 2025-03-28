@@ -1,6 +1,8 @@
-# sv
+# svolto
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Svelte rendering of Volto Blocks content from hybrid CMS Plone
+You will need a Plone Backend with plone.restapi enabled.
+The content is managed by using the default Plone Frontedn `Volto`.
 
 ## Creating a project
 
