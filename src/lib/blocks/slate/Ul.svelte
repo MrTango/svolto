@@ -2,6 +2,6 @@
   let { children, node, parent } = $props();
 </script>
 
-<ul>
+<ul class="list-inside list-disc">
   {@render children?.()}
 </ul>

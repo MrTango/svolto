@@ -26,12 +26,12 @@
 {/await}
 
 
-<style lang="scss">
-	// h1 {
-	// 	color: green;
-	// 	font-size: 3.5rem;
-	// }
-	// h2{
-	//   font-size: 2.2rem;
-	// }
+<style>
+	h1 {
+		color: green;
+		font-size: 3.5rem;
+	}
+	h2{
+	  font-size: 2.2rem;
+	}
 </style>

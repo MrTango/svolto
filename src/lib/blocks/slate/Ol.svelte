@@ -2,6 +2,6 @@
   let { children, node, parent } = $props();
 </script>
 
-<ol>
+<ol class="list-inside list-decimal">
   {@render children?.()}
 </ol>
