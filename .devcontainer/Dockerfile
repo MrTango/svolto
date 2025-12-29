@@ -64,6 +64,8 @@ ENV PATH=$PATH:/usr/local/share/npm-global/bin
 # Set the default shell to zsh rather than sh
 ENV SHELL=/bin/zsh
 
+RUN echo 'unset NODE_OPTIONS' >> ~/.zshrc
+
 # Set the default editor and visual
 ENV EDITOR=nano
 ENV VISUAL=nano
@@ -84,7 +86,7 @@ RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}
 
 
 # Copy and set up firewall script
-COPY init-firewall.sh /usr/local/bin/
+COPY .devcontainer/init-firewall.sh /usr/local/bin/
 USER root
 RUN chmod +x /usr/local/bin/init-firewall.sh && \
   echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \

@@ -1,8 +1,8 @@
 services:
   app: # devcontainer service
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
     ports:
       - '5173:5173'
     # command: ["pnpm", "run", "dev", "--", "--host", "0.0.0.0"]
