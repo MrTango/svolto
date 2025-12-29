@@ -1,7 +1,7 @@
 <script lang="ts">
-  let { children, node, parent } = $props();
+	let { children, node, parent } = $props();
 </script>
 
-<li>
-  {@render children?.()}
+<li class="slate-li">
+	{@render children?.()}
 </li>

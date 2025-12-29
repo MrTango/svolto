@@ -1,0 +1,97 @@
+// @use "@picocss/pico/scss/pico";
+// @use "@picocss/pico/scss/_variables.scss" as pico_vars;
+
+// nav[name='contextnav']{
+//   ul{
+//     padding: 0 0 0 0.5em;
+//   }
+//   >ul{
+//     padding-left: 0;
+//   }
+// }
+
+// default Plone content styles:
+
+// img,
+// picture {
+//   max-width: 100%;
+//   height: auto;
+// }
+
+// .text-columns-2 {
+//   columns: 2;
+// }
+
+// .text-columns-3 {
+//   columns: 3;
+// }
+
+// figure{
+//   display: table;
+// }
+// figcaption{
+//   display: table-caption;
+//   caption-side: bottom;
+// }
+
+// .image-right {
+//   margin: 1em auto;
+
+//   &.picture-variant-large {
+//     @if map-get(pico_vars.$breakpoints, "xl") {
+//       @media (min-width: map-get(pico_vars.$breakpoints, "xl")) {
+//         float: right;
+//         margin-left: 0.5em;
+//       }
+//     }
+//   }
+
+//   &.picture-variant-medium {
+//     @if map-get(pico_vars.$breakpoints, "xl") {
+//       @media (min-width: map-get(pico_vars.$breakpoints, "xl")) {
+//         float: right;
+//         margin-left: 0.5em;
+//       }
+//     }
+//   }
+
+//   &.picture-variant-small {
+//     @if map-get(pico_vars.$breakpoints, "md") {
+//       @media (min-width: map-get(pico_vars.$breakpoints, "md")) {
+//         float: right;
+//         margin-left: 0.5em;
+//       }
+//     }
+//   }
+// }
+
+// .image-left {
+//   margin: 1em auto;
+
+//   &.picture-variant-large {
+//     @if map-get(pico_vars.$breakpoints, "xl") {
+//       @media (min-width: map-get(pico_vars.$breakpoints, "xl")) {
+//         float: left;
+//         margin-right: 0.5em;
+//       }
+//     }
+//   }
+
+//   &.picture-variant-medium {
+//     @if map-get(pico_vars.$breakpoints, "xl") {
+//       @media (min-width: map-get(pico_vars.$breakpoints, "xl")) {
+//         float: left;
+//         margin-right: 0.5em;
+//       }
+//     }
+//   }
+
+//   &.picture-variant-small {
+//     @if map-get(pico_vars.$breakpoints, "md") {
+//       @media (min-width: map-get(pico_vars.$breakpoints, "md")) {
+//         float: left;
+//         margin-right: 0.5em;
+//       }
+//     }
+//   }
+// }

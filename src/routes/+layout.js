@@ -10,7 +10,7 @@ export const trailingSlash = 'always';
 const applyConfig = (config) => {
 	config.blocks.blocksConfig = {
 		...config.blocks.blocksConfig,
-		...blocks,
+		...blocks
 	};
 	return config;
 };
@@ -21,9 +21,15 @@ export async function load(event) {
 	// let headers = new Headers();
 	// headers.set('Accept', 'application/json');
 	// headers.set('X-Requested-With', 'Fetch');
+	let currentPath = '/';
+	if (event.params.path != undefined) {
+		currentPath = event.params.path;
+	}
+	console.log(currentPath);
+
 	const { getContent } = client;
 
-	const data = await getContent({ path: '/' })
-	console.log(await data)
-	return data
+	const data = await getContent({ path: currentPath });
+	console.log(await data);
+	return data;
 }

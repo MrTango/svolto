@@ -5,7 +5,12 @@
 </script>
 
 <main class="layout-wrapper">
-
-{@render children()}
-
+	{@render children()}
 </main>
+
+<style>
+main {
+	max-width: 1127px;
+	margin: 0 auto;
+}
+</style>

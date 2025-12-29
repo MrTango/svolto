@@ -2,31 +2,362 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
-
 @layer base {
-  h1 {
-    font-size: var(--text-2xl);
-  }
-  h2 {
-    font-size: var(--text-xl);
-  }
-  h3 {
-    font-size: var(--text-lg);
-  }
-  a {
-    color: var(--color-blue-600);
-    text-decoration-line: underline;
-  }
+	h1 {
+		font-size: var(--text-2xl);
+	}
+	h2 {
+		font-size: var(--text-xl);
+	}
+	h3 {
+		font-size: var(--text-lg);
+	}
+	h4 {
+		font-size: var(--text-base);
+		font-weight: var(--font-weight-semibold, 600);
+	}
+	h5 {
+		font-size: var(--text-sm);
+		font-weight: var(--font-weight-semibold, 600);
+	}
+	h6 {
+		font-size: var(--text-xs);
+		font-weight: var(--font-weight-semibold, 600);
+	}
+	a {
+		color: var(--color-blue-600);
+		text-decoration-line: underline;
+	}
 }
 
 @layer components {
-  .card {
-    --rounded-lg: 1rem;
-    --spacing-6: 1rem;
-    background-color: var(--color-white);
-    border-radius: var(--rounded-lg);
-    padding: var(--spacing-6);
-    box-shadow: var(--shadow-xl);
-  }
-}
+	.card {
+		--rounded-lg: 1rem;
+		--spacing-6: 1rem;
+		background-color: var(--color-white);
+		border-radius: var(--rounded-lg);
+		padding: var(--spacing-6);
+		box-shadow: var(--shadow-xl);
+	}
 
+	/* Slate Block Custom Properties */
+	:root {
+		/* Headings */
+		--slate-heading-color: inherit;
+		--slate-heading-font-weight: var(--font-weight-bold, 700);
+
+		/* Paragraph */
+		--slate-paragraph-margin: 0 0 1rem 0;
+		--slate-paragraph-line-height: 1.6;
+
+		/* Inline Code */
+		--slate-code-bg: var(--color-gray-100, #f3f4f6);
+		--slate-code-font-family:
+			ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+		--slate-code-padding: 0.125rem 0.25rem;
+		--slate-code-border-radius: 0.25rem;
+
+		/* Blockquote */
+		--slate-blockquote-border-color: var(--color-gray-300, #d1d5db);
+		--slate-blockquote-border-width: 4px;
+		--slate-blockquote-padding: 0 0 0 1rem;
+		--slate-blockquote-margin: 1rem 0;
+
+		/* Lists */
+		--slate-list-margin: 0 0 1rem 0;
+		--slate-list-padding: 0 0 0 1.5rem;
+		--slate-list-item-margin: 0.25rem 0;
+
+		/* Introduction Block */
+		--introduction-font-size: var(--text-xl);
+		--introduction-font-weight: inherit;
+		--introduction-color: inherit;
+		--introduction-max-width: 48rem;
+
+		/* Slate Table Block Custom Properties */
+		--table-cell-padding: 0.75rem 1rem;
+		--table-border-color: var(--color-gray-200, #e5e7eb);
+		--table-header-bg: var(--color-gray-50, #f9fafb);
+		--table-striped-row-bg: var(--color-gray-50, #f9fafb);
+		--table-inverted-bg: var(--color-gray-800, #1f2937);
+		--table-inverted-color: var(--color-white, #ffffff);
+		--table-compact-padding: 0.375rem 0.5rem;
+
+		/* Teaser Block Custom Properties (Volto-compatible) */
+		--teaser-images-aspect-ratio: 16/9;
+		--teaser-images-object-position: top left;
+		--teaser-content-padding: 0.5rem 0;
+		--teaser-gap: 1rem;
+		--teaser-headline-color: var(--color-gray-600, #4b5563);
+		--teaser-headline-font-size: var(--text-sm, 0.875rem);
+		--teaser-title-color: inherit;
+		--teaser-description-color: var(--color-gray-700, #374151);
+	}
+
+	/* Slate Paragraph */
+	.slate-paragraph {
+		margin: var(--slate-paragraph-margin);
+		line-height: var(--slate-paragraph-line-height);
+	}
+
+	/* Slate Headings */
+	.slate-h2,
+	.slate-h3,
+	.slate-h4,
+	.slate-h5,
+	.slate-h6 {
+		color: var(--slate-heading-color);
+		font-weight: var(--slate-heading-font-weight);
+		margin-bottom: 0.5rem;
+	}
+
+	/* Slate Inline Code */
+	.slate-code {
+		font-family: var(--slate-code-font-family);
+		background-color: var(--slate-code-bg);
+		padding: var(--slate-code-padding);
+		border-radius: var(--slate-code-border-radius);
+	}
+
+	/* Slate Blockquote */
+	.slate-blockquote {
+		border-left: var(--slate-blockquote-border-width) solid var(--slate-blockquote-border-color);
+		padding: var(--slate-blockquote-padding);
+		margin: var(--slate-blockquote-margin);
+	}
+
+	/* Slate Lists */
+	.slate-ol {
+		list-style-type: decimal;
+		list-style-position: inside;
+		margin: var(--slate-list-margin);
+		padding: var(--slate-list-padding);
+	}
+
+	.slate-ul {
+		list-style-type: disc;
+		list-style-position: inside;
+		margin: var(--slate-list-margin);
+		padding: var(--slate-list-padding);
+	}
+
+	.slate-li {
+		margin: var(--slate-list-item-margin);
+	}
+
+	/* Nested lists reset margin */
+	.slate-ol .slate-ol,
+	.slate-ol .slate-ul,
+	.slate-ul .slate-ol,
+	.slate-ul .slate-ul {
+		margin-top: 0.25rem;
+		margin-bottom: 0;
+	}
+
+	/* Introduction Block */
+	.introduction-block {
+		font-size: var(--introduction-font-size);
+		font-weight: var(--introduction-font-weight);
+		color: var(--introduction-color);
+		max-width: var(--introduction-max-width);
+		margin-bottom: 1.5rem;
+	}
+
+	/* Slate Table Block Styles */
+
+	/* Table Scroll Container - Responsive horizontal scroll */
+	.table-scroll-container {
+		overflow-x: auto;
+		position: relative;
+		/* Visual scroll indicator shadows on edges when scrollable */
+		background:
+			/* Left shadow */
+			linear-gradient(to right, var(--color-white, #ffffff) 30%, transparent),
+			/* Right shadow */
+			linear-gradient(to left, var(--color-white, #ffffff) 30%, transparent),
+			/* Left shadow indicator */
+			linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent 20px),
+			/* Right shadow indicator */
+			linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent 20px);
+		background-position:
+			left center,
+			right center,
+			left center,
+			right center;
+		background-repeat: no-repeat;
+		background-size:
+			40px 100%,
+			40px 100%,
+			20px 100%,
+			20px 100%;
+		background-attachment: local, local, scroll, scroll;
+	}
+
+	/* Base table styles */
+	.block.slateTable table {
+		width: 100%;
+		border-collapse: collapse;
+		border-spacing: 0;
+		font-size: var(--text-sm, 0.875rem);
+		line-height: 1.5;
+	}
+
+	.block.slateTable th,
+	.block.slateTable td {
+		padding: var(--table-cell-padding);
+		text-align: left;
+		vertical-align: top;
+		border-bottom: 1px solid var(--table-border-color);
+	}
+
+	.block.slateTable th {
+		font-weight: var(--font-weight-semibold, 600);
+		background-color: var(--table-header-bg);
+	}
+
+	.block.slateTable thead th {
+		border-bottom: 2px solid var(--table-border-color);
+	}
+
+	/* Display option modifiers */
+
+	/* Fixed table layout */
+	.block.slateTable table.slateTable--fixed {
+		table-layout: fixed;
+	}
+
+	/* Compact - reduced padding */
+	.block.slateTable table.slateTable--compact th,
+	.block.slateTable table.slateTable--compact td {
+		padding: var(--table-compact-padding);
+	}
+
+	/* Basic - minimal borders and backgrounds */
+	.block.slateTable table.slateTable--basic {
+		border: none;
+	}
+
+	.block.slateTable table.slateTable--basic th {
+		background-color: transparent;
+		border-bottom: 1px solid var(--table-border-color);
+	}
+
+	.block.slateTable table.slateTable--basic td {
+		border-bottom: none;
+	}
+
+	.block.slateTable table.slateTable--basic thead th {
+		border-bottom: 1px solid var(--table-border-color);
+	}
+
+	/* Celled - visible cell borders */
+	.block.slateTable table.slateTable--celled th,
+	.block.slateTable table.slateTable--celled td {
+		border: 1px solid var(--table-border-color);
+	}
+
+	/* Inverted - inverted color scheme */
+	.block.slateTable table.slateTable--inverted {
+		background-color: var(--table-inverted-bg);
+		color: var(--table-inverted-color);
+	}
+
+	.block.slateTable table.slateTable--inverted th {
+		background-color: rgba(255, 255, 255, 0.1);
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+
+	.block.slateTable table.slateTable--inverted td {
+		border-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.block.slateTable table.slateTable--inverted a {
+		color: var(--color-blue-300, #93c5fd);
+	}
+
+	/* Striped - alternating row colors */
+	.block.slateTable table.slateTable--striped tbody tr:nth-child(odd) {
+		background-color: var(--table-striped-row-bg);
+	}
+
+	/* Inverted striped rows need different treatment */
+	.block.slateTable table.slateTable--inverted.slateTable--striped tbody tr:nth-child(odd) {
+		background-color: rgba(255, 255, 255, 0.05);
+	}
+
+	/* Sortable table headers */
+	.block.slateTable table.slateTable--sortable th {
+		cursor: pointer;
+		user-select: none;
+		position: relative;
+	}
+
+	.block.slateTable table.slateTable--sortable th:hover {
+		background-color: var(--color-gray-100, #f3f4f6);
+	}
+
+	.block.slateTable table.slateTable--inverted.slateTable--sortable th:hover {
+		background-color: rgba(255, 255, 255, 0.15);
+	}
+
+	/* Focus ring styling for sortable headers - keyboard navigation */
+	.block.slateTable table.slateTable--sortable th:focus-visible {
+		outline: 2px solid var(--color-blue-500, #3b82f6);
+		outline-offset: -2px;
+		z-index: 1;
+	}
+
+	.block.slateTable table.slateTable--inverted.slateTable--sortable th:focus-visible {
+		outline-color: var(--color-blue-300, #93c5fd);
+	}
+
+	/* Sort indicator arrows (using CSS) */
+	.block.slateTable table.slateTable--sortable th[aria-sort='ascending']::after {
+		content: ' \2191'; /* Up arrow */
+		margin-left: 0.25rem;
+	}
+
+	.block.slateTable table.slateTable--sortable th[aria-sort='descending']::after {
+		content: ' \2193'; /* Down arrow */
+		margin-left: 0.25rem;
+	}
+
+	/* Teaser Block Styles */
+
+	/* Base teaser block styling */
+	.block.teaser {
+		margin-bottom: 1.5rem;
+	}
+
+	/* Teaser item link reset */
+	.block.teaser .teaser-item {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.block.teaser .teaser-item:hover h2 {
+		text-decoration: underline;
+	}
+
+	/* Teaser headline (kicker) styling */
+	.block.teaser .headline {
+		display: block;
+		color: var(--teaser-headline-color);
+		font-size: var(--teaser-headline-font-size);
+		margin-bottom: 0.25rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	/* Teaser title styling */
+	.block.teaser h2 {
+		color: var(--teaser-title-color);
+		margin-bottom: 0.5rem;
+	}
+
+	/* Teaser description styling */
+	.block.teaser .description {
+		color: var(--teaser-description-color);
+		line-height: 1.5;
+	}
+}

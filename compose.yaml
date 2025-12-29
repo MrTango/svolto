@@ -1,0 +1,60 @@
+services:
+
+  backend:
+    build:
+      context: ./docker/backend
+      dockerfile: Dockerfile
+    environment:
+      RELSTORAGE_DSN: "dbname='plone' user='plone' host='db' password='plone'"
+    ports:
+      - '8088:8080'
+    networks:
+       - appsuite
+    volumes:
+      - backend_blobstorage:/data/blobstorage
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: plone
+      POSTGRES_PASSWORD: plone
+      POSTGRES_DB: plone
+    networks:
+       - appsuite
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U plone -d plone"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    image: 'plone/plone-frontend:19.0.0a20'
+    ports:
+      - '3000:3000'
+    restart: always
+    networks:
+       - appsuite
+    environment:
+      # These are needed in a Docker environment since the
+      # routing needs to be amended. You can point to the
+      # internal network alias.
+      RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
+      RAZZLE_DEV_PROXY_API_PATH: http://backend:8080/Plone
+    depends_on:
+      - backend
+
+networks:
+  appsuite:
+    name: appsuite
+    driver: bridge
+
+volumes:
+  backend_blobstorage:
+  db_data:

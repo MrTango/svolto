@@ -20,18 +20,17 @@
 		<h2>{content['title']}</h2>
 		<p>{content['@id']}</p>
 		<h3>Volto Blocks</h3>
-    <RenderBlocks content={content} blocksConfig={config.blocks.blocksConfig} pathname="/" />
+		<RenderBlocks {content} blocksConfig={config.blocks.blocksConfig} pathname="/" />
 		<!-- <ReactRenderBlocks content={content} blocksConfig={config.blocks.blocksConfig} pathname="/" /> -->
 	</article>
 {/await}
-
 
 <style>
 	h1 {
 		color: green;
 		font-size: 3.5rem;
 	}
-	h2{
-	  font-size: 2.2rem;
+	h2 {
+		font-size: 2.2rem;
 	}
 </style>
