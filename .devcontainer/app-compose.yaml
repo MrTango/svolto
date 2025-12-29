@@ -1,0 +1,26 @@
+services:
+  app: # devcontainer service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5173:5173'
+    # command: ["pnpm", "run", "dev", "--", "--host", "0.0.0.0"]
+    volumes:
+      - ..:/workspace:cached
+    networks:
+      - appsuite
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    tty: true
+    stdin_open: true
+    # depends_on:
+    #   - db
+    #   - backend
+    #   - frontend
+
+networks:
+  appsuite:
+    external: true
+    name: appsuite
