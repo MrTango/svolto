@@ -223,6 +223,15 @@
 		flex-direction: column;
 	}
 
+	/* Contained teaser (inside another block like grid): stack vertically */
+	.teaser-item.contained {
+		flex-direction: column;
+	}
+
+	.teaser-item.contained :global(.image-wrapper) {
+		width: 100%;
+	}
+
 	/* Styles for child components need to be global since they're in separate components */
 	.teaser-item :global(.image-wrapper) {
 		flex-shrink: 0;

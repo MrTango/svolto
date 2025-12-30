@@ -27,6 +27,7 @@ Create a fresh teaser block component for Svolto that renders teaser content fro
 - Center/Top alignment: image above text content (display: block, stacked layout)
 - Apply alignment via CSS class `has--align--{left|right|center}` on block container
 - Default to `left` alignment when not specified
+- when teaser item has class contained, so it's rendered inside another block like grid block, it should be flex-direction: column;
 
 **Responsive Image Handling**
 
