@@ -50,6 +50,8 @@
 		"@tanstack/svelte-query": "^5.69.0",
 		"@tanstack/svelte-query-devtools": "^5.69.0",
 		"@tanstack/svelte-query-persist-client": "^5.69.0",
+		"embla-carousel": "^8.6.0",
+		"embla-carousel-svelte": "^8.6.0",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"sass": "^1.86.0",

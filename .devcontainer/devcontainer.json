@@ -11,7 +11,8 @@
 				"dbaeumer.vscode-eslint",
 				"esbenp.prettier-vscode",
 				"svelte.svelte-vscode",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"ms-vscode.vscode-json"
 			],
 			"settings": {
 				"editor.formatOnSave": true,
@@ -44,6 +45,8 @@
 	},
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
 	"workspaceFolder": "/workspace",
+	"postCreateCommand": "pnpm install",
 	"postStartCommand": "sudo /usr/local/bin/init-firewall.sh && unset NODE_OPTIONS",
+	"overrideCommand": false,
 	"waitFor": "postStartCommand"
 }

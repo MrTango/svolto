@@ -108,3 +108,4 @@ Available <tech>: svelte, tailwindcss
 
 - use btca for svelte, sveltekit, seven and volto!
 - when running /agent-os:implement-tasks don't ask me just proceed with implementing of all tasks in groups!
+- don't write comments over every method or class!

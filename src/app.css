@@ -92,6 +92,10 @@
 		--teaser-headline-font-size: var(--text-sm, 0.875rem);
 		--teaser-title-color: inherit;
 		--teaser-description-color: var(--color-gray-700, #374151);
+
+		/* Video Block Custom Properties */
+		--video-aspect-ratio: 16/9;
+		--video-border-radius: 0;
 	}
 
 	/* Slate Paragraph */
@@ -173,12 +177,9 @@
 		background:
 			/* Left shadow */
 			linear-gradient(to right, var(--color-white, #ffffff) 30%, transparent),
-			/* Right shadow */
-			linear-gradient(to left, var(--color-white, #ffffff) 30%, transparent),
-			/* Left shadow indicator */
-			linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent 20px),
-			/* Right shadow indicator */
-			linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent 20px);
+			/* Right shadow */ linear-gradient(to left, var(--color-white, #ffffff) 30%, transparent),
+			/* Left shadow indicator */ linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent 20px),
+			/* Right shadow indicator */ linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent 20px);
 		background-position:
 			left center,
 			right center,
@@ -359,5 +360,87 @@
 	.block.teaser .description {
 		color: var(--teaser-description-color);
 		line-height: 1.5;
+	}
+
+	/* Video Block Styles */
+
+	/* Base video block styling */
+	.block.video {
+		margin-bottom: 1.5rem;
+		border-radius: var(--video-border-radius);
+		overflow: hidden;
+	}
+
+	/* Video aspect ratio container */
+	.block.video .video-wrapper {
+		position: relative;
+		aspect-ratio: var(--video-aspect-ratio, 16/9);
+		width: 100%;
+	}
+
+	.block.video .video-wrapper iframe,
+	.block.video .video-wrapper video {
+		width: 100%;
+		height: 100%;
+	}
+
+	.block.video .video-wrapper iframe {
+		border: 0;
+	}
+
+	.block.video .video-wrapper video {
+		object-fit: contain;
+	}
+
+	/* Full-width alignment (default) - spans full container width */
+	.block.video.has--align--full {
+		width: 100%;
+		float: none;
+	}
+
+	.block.video.has--align--full .video-wrapper {
+		width: 100%;
+	}
+
+	/* Left alignment - float left, width ~50%, content wraps on right */
+	.block.video.has--align--left {
+		float: left;
+		width: 50%;
+		margin-right: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	/* Center alignment - centered, no float, reasonable max-width */
+	.block.video.has--align--center {
+		float: none;
+		width: 100%;
+		max-width: 640px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* Right alignment - float right, width ~50%, content wraps on left */
+	.block.video.has--align--right {
+		float: right;
+		width: 50%;
+		margin-left: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	/* Video Block Mobile responsive behavior */
+	@media (max-width: 768px) {
+		/* Remove floats and stack full-width on mobile */
+		.block.video.has--align--left,
+		.block.video.has--align--right {
+			float: none;
+			width: 100%;
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		/* Center alignment stays full-width on mobile */
+		.block.video.has--align--center {
+			max-width: 100%;
+		}
 	}
 }

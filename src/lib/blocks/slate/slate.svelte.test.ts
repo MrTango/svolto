@@ -225,6 +225,65 @@ describe('Slate Block - Inline Text Formatting', () => {
 		expect(strikethrough).toHaveTextContent('strikethrough text');
 	});
 
+	test('Del renders del element with slate-del class', () => {
+		const data = {
+			value: [
+				{
+					type: 'p',
+					children: [
+						{
+							type: 'del',
+							children: [{ text: 'deleted text' }]
+						}
+					]
+				}
+			]
+		};
+
+		const { container } = render(SlateBlockView, {
+			props: { key: 'test-key', id: 'test-id', data }
+		});
+
+		const del = container.querySelector('del.slate-del');
+		expect(del).toBeInTheDocument();
+		expect(del).toHaveTextContent('deleted text');
+	});
+
+	test('Del with nested content renders correctly', () => {
+		const data = {
+			value: [
+				{
+					type: 'p',
+					children: [
+						{
+							type: 'del',
+							children: [
+								{ text: 'deleted ' },
+								{
+									type: 'strong',
+									children: [{ text: 'bold' }]
+								},
+								{ text: ' text' }
+							]
+						}
+					]
+				}
+			]
+		};
+
+		const { container } = render(SlateBlockView, {
+			props: { key: 'test-key', id: 'test-id', data }
+		});
+
+		const del = container.querySelector('del.slate-del');
+		expect(del).toBeInTheDocument();
+		expect(del).toHaveTextContent('deleted bold text');
+
+		const strongInsideDel = del?.querySelector('strong.slate-strong');
+		expect(strongInsideDel).toBeInTheDocument();
+		expect(strongInsideDel).toHaveTextContent('bold');
+	});
+
 	test('Sub renders sub element with slate-sub class', () => {
 		const data = {
 			value: [

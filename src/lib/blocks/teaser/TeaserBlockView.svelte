@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getTemplateForContentType } from './templates/index';
 
-	let { key, id, data, metadata, properties, path } = $props();
+	let { key, id, data, metadata, properties, path, contained = false } = $props();
 
 	// Extract target content from href
 	const target = $derived(data?.href?.[0] || null);
@@ -34,6 +34,10 @@
 	const blockClasses = $derived(() => {
 		const classes = ['block', 'teaser'];
 		classes.push(`has--align--${alignment}`);
+		// Add contained modifier when rendered inside another block (e.g., grid)
+		if (contained) {
+			classes.push('contained');
+		}
 		return classes.join(' ');
 	});
 
@@ -224,12 +228,12 @@
 	}
 
 	/* Contained teaser (inside another block like grid): stack vertically */
-	.teaser-item.contained {
+	.block.teaser.contained .teaser-item {
 		flex-direction: column;
 	}
 
-	.teaser-item.contained :global(.image-wrapper) {
-		width: 100%;
+	.block.teaser.contained .teaser-item :global(.image-wrapper) {
+		width: 100% !important;
 	}
 
 	/* Styles for child components need to be global since they're in separate components */

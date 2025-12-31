@@ -199,12 +199,12 @@ Grid block data from Plone follows this structure:
 
 ### File Locations
 
-| File | Path |
-|------|------|
-| GridBlockView component | `/workspace/src/lib/blocks/grid/GridBlockView.svelte` |
-| Block registry | `/workspace/src/lib/blocks/index.ts` |
-| RenderBlocks (reuse) | `/workspace/src/lib/RenderBlocks.svelte` |
-| Test file | `/workspace/src/lib/blocks/grid/GridBlockView.svelte.test.ts` |
+| File                    | Path                                                          |
+| ----------------------- | ------------------------------------------------------------- |
+| GridBlockView component | `/workspace/src/lib/blocks/grid/GridBlockView.svelte`         |
+| Block registry          | `/workspace/src/lib/blocks/index.ts`                          |
+| RenderBlocks (reuse)    | `/workspace/src/lib/RenderBlocks.svelte`                      |
+| Test file               | `/workspace/src/lib/blocks/grid/GridBlockView.svelte.test.ts` |
 
 ### CSS Class Naming
 

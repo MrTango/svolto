@@ -6,11 +6,11 @@
 2. [x] Description Block — Render content description/lead text with proper semantic markup `XS`
 3. [x] Text Block (Slate Complete) — Extend Slate renderer to support all inline styles, block quotes, code blocks, and nested structures `S`
 4. [x] Table Block — Render tables with header rows/columns, cell alignment, and responsive behavior `S`
-5. [ ] Video Block — Embed videos from YouTube, Vimeo, and self-hosted sources with responsive aspect ratios `S`
+5. [x] Video Block — Embed videos from YouTube, Vimeo, and self-hosted sources with responsive aspect ratios `S`
 6. [ ] Maps Block — Render embedded maps (Google Maps, OpenStreetMap) with configurable zoom and markers `S`
 7. [ ] HTML Block — Safely render raw HTML content with appropriate sanitization `XS`
 8. [ ] TOC Block — Generate table of contents from page headings with anchor links `S`
-9. [ ] Listing Block — Render content listings with multiple layout variations (summary, image gallery, news items) `M`
+9. [x] Listing Block — Render content listings with multiple layout variations (summary, image gallery, news items) `M`
 10. [ ] Search Block — Display search interface with results rendering and faceted filtering support `M`
 
 ## Block Coverage: Volto Light Theme Blocks

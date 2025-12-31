@@ -20,6 +20,7 @@ The Teaser Block implementation has been successfully completed. All 7 task grou
 ### Completed Tasks
 
 - [x] Task Group 1: Block Registration and Base Structure
+
   - [x] 1.1 Write 3-4 focused tests for TeaserBlockView base functionality
   - [x] 1.2 Create fresh `TeaserBlockView.svelte` in `src/lib/blocks/teaser/`
   - [x] 1.3 Implement base teaser structure
@@ -27,6 +28,7 @@ The Teaser Block implementation has been successfully completed. All 7 task grou
   - [x] 1.5 Ensure base structure tests pass
 
 - [x] Task Group 2: Responsive Image Handling
+
   - [x] 2.1 Write 3-4 focused tests for image functionality
   - [x] 2.2 Implement image srcset building logic
   - [x] 2.3 Create `<picture>` element structure
@@ -34,12 +36,14 @@ The Teaser Block implementation has been successfully completed. All 7 task grou
   - [x] 2.5 Ensure image tests pass
 
 - [x] Task Group 3: Alignment Options
+
   - [x] 3.1 Write 4-5 focused tests for alignment functionality
   - [x] 3.2 Implement alignment class computation
   - [x] 3.3 Apply alignment CSS classes
   - [x] 3.4 Ensure alignment tests pass
 
 - [x] Task Group 4: Template Registration Mechanism
+
   - [x] 4.1 Write 3-4 focused tests for template registration
   - [x] 4.2 Create template registry in `src/lib/blocks/teaser/templates/index.ts`
   - [x] 4.3 Create `DefaultTeaserTemplate.svelte` component
@@ -47,6 +51,7 @@ The Teaser Block implementation has been successfully completed. All 7 task grou
   - [x] 4.5 Ensure template registration tests pass
 
 - [x] Task Group 5: Event Content-Type Template
+
   - [x] 5.1 Write 4-5 focused tests for Event template
   - [x] 5.2 Create `EventTeaserTemplate.svelte` in `src/lib/blocks/teaser/templates/`
   - [x] 5.3 Implement date/time display logic
@@ -55,6 +60,7 @@ The Teaser Block implementation has been successfully completed. All 7 task grou
   - [x] 5.6 Ensure Event template tests pass
 
 - [x] Task Group 6: CSS and Responsive Styling
+
   - [x] 6.1 Write 3-4 focused tests for CSS and responsive behavior
   - [x] 6.2 Implement CSS custom properties (Volto-compatible)
   - [x] 6.3 Implement alignment layouts
@@ -83,15 +89,15 @@ None - all tasks verified complete.
 
 The following implementation files have been verified:
 
-| File | Status | Notes |
-|------|--------|-------|
-| `src/lib/blocks/teaser/TeaserBlockView.svelte` | Verified | Fresh component with all features |
-| `src/lib/blocks/teaser/templates/index.ts` | Verified | Template registry with getTemplateForContentType() |
-| `src/lib/blocks/teaser/templates/DefaultTeaserTemplate.svelte` | Verified | Standard teaser template |
-| `src/lib/blocks/teaser/templates/EventTeaserTemplate.svelte` | Verified | Event template with date/time/location |
-| `src/lib/blocks/index.ts` | Verified | Teaser block registered |
-| `src/lib/blocks/teaser/TeaserBlockView.svelte.test.ts` | Verified | 34 teaser tests |
-| `src/lib/blocks/teaser/templates/templates.test.ts` | Verified | 4 template registration tests |
+| File                                                           | Status   | Notes                                              |
+| -------------------------------------------------------------- | -------- | -------------------------------------------------- |
+| `src/lib/blocks/teaser/TeaserBlockView.svelte`                 | Verified | Fresh component with all features                  |
+| `src/lib/blocks/teaser/templates/index.ts`                     | Verified | Template registry with getTemplateForContentType() |
+| `src/lib/blocks/teaser/templates/DefaultTeaserTemplate.svelte` | Verified | Standard teaser template                           |
+| `src/lib/blocks/teaser/templates/EventTeaserTemplate.svelte`   | Verified | Event template with date/time/location             |
+| `src/lib/blocks/index.ts`                                      | Verified | Teaser block registered                            |
+| `src/lib/blocks/teaser/TeaserBlockView.svelte.test.ts`         | Verified | 34 teaser tests                                    |
+| `src/lib/blocks/teaser/templates/templates.test.ts`            | Verified | 4 template registration tests                      |
 
 ### Implementation Reports
 
@@ -126,11 +132,11 @@ The Teaser Block is not explicitly listed as a separate item in `agent-os/produc
 
 ### Teaser Block Tests Breakdown
 
-| Test File | Tests | Status |
-|-----------|-------|--------|
-| `TeaserBlockView.svelte.test.ts` | 34 | All Passing |
-| `templates/templates.test.ts` | 4 | All Passing |
-| **Total Teaser Tests** | **38** | **All Passing** |
+| Test File                        | Tests  | Status          |
+| -------------------------------- | ------ | --------------- |
+| `TeaserBlockView.svelte.test.ts` | 34     | All Passing     |
+| `templates/templates.test.ts`    | 4      | All Passing     |
+| **Total Teaser Tests**           | **38** | **All Passing** |
 
 ### Test Categories Covered
 
@@ -154,11 +160,13 @@ None - all tests passing
 **Status:** All Requirements Met
 
 ### Fresh TeaserBlockView.svelte component
+
 - [x] Replaced existing component in `src/lib/blocks/teaser/`
 - [x] Uses Svelte 5 `$props()` pattern
 - [x] Follows TypeScript conventions
 
 ### All teaser elements
+
 - [x] Image (optional, with picture/srcset)
 - [x] head_title (kicker) - renders when present
 - [x] title in h2 element
@@ -166,24 +174,28 @@ None - all tests passing
 - [x] Entire teaser wrapped in link to target href
 
 ### 3 alignment options
+
 - [x] Left alignment: `flex-direction: row` (image left, text right)
 - [x] Right alignment: `flex-direction: row-reverse` (image right, text left)
 - [x] Center/top alignment: `flex-direction: column` (stacked)
 - [x] Mobile responsive: All layouts stack vertically below 768px
 
 ### Responsive images
+
 - [x] `<picture>` element with `<source srcset>`
 - [x] srcset built from image_scales data
 - [x] `sizes` attribute: `(max-width: 768px) 100vw, 50vw`
 - [x] `loading="lazy"` on all images
 
 ### Content-type template registration
+
 - [x] Template registry in `src/lib/blocks/teaser/templates/index.ts`
 - [x] `getTemplateForContentType(contentType)` function exported
 - [x] DefaultTeaserTemplate as fallback
 - [x] Dynamic template selection based on `data.href[0]['@type']`
 
 ### Event template
+
 - [x] EventTeaserTemplate.svelte created
 - [x] Date display with Intl.DateTimeFormat
 - [x] Time hidden when whole_day is true
@@ -191,12 +203,14 @@ None - all tests passing
 - [x] All standard teaser fields included
 
 ### Volto-compatible CSS
+
 - [x] `--teaser-images-aspect-ratio` custom property (default: 16/9)
 - [x] `--teaser-images-object-position` custom property (default: top left)
 - [x] BEM-style classes: `.block.teaser`, `.teaser-item`, `.image-wrapper`, `.content`, `.headline`
 - [x] Modifier classes: `.teaser-item.default`, `.teaser-item.event`, `.no-image`
 
 ### Teasers without images
+
 - [x] Graceful rendering without image-wrapper
 - [x] `.no-image` modifier class applied
 - [x] Text content expands to fill width
@@ -210,12 +224,14 @@ None - all tests passing
 The type checking (`npm run check`) reported 76 errors and 2 warnings. Analysis shows:
 
 **Pre-existing issues (not from teaser implementation):**
+
 - `src/lib/utils.js`: 13 errors (implicit any types, missing exports)
 - `src/lib/plone/*.svelte`: Multiple errors (untyped parameters)
 - `src/routes/+layout.js`: 3 errors (type mismatches)
 - `src/lib/blocks/image/ImageBlockView.svelte`: 2 errors (unknown type)
 
 **Teaser-related minor issues:**
+
 - `src/lib/blocks/teaser/templates/index.ts`: 2 type compatibility errors (Component generic typing)
 - `src/lib/blocks/teaser/TeaserBlockView.svelte`: 2 warnings for empty CSS rulesets (placeholder styling)
 - Test file: Multiple "missing optional props" warnings (tests work correctly at runtime)

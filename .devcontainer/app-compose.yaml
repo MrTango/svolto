@@ -5,7 +5,11 @@ services:
       dockerfile: .devcontainer/Dockerfile
     ports:
       - '5173:5173'
+    # Uncomment the line below to auto-start the dev server
     # command: ["pnpm", "run", "dev", "--", "--host", "0.0.0.0"]
+
+    # Alternative: Use postCreateCommand in devcontainer.json for auto-start
+    # Or manually run: pnpm run dev -- --host 0.0.0.0
     volumes:
       - ..:/workspace:cached
     networks:

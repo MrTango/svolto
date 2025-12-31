@@ -2,6 +2,7 @@
 	import { Text as SlateText } from 'slate';
 	import Blockquote from './Blockquote.svelte';
 	import Code from './Code.svelte';
+	import Del from './Del.svelte';
 	import Em from './Em.svelte';
 	import H2 from './H2.svelte';
 	import H3 from './H3.svelte';
@@ -41,6 +42,7 @@
 		em: { view: Em },
 		underline: { view: Underline },
 		strikethrough: { view: Strikethrough },
+		del: { view: Del },
 		sub: { view: Sub },
 		sup: { view: Sup },
 		code: { view: Code },

@@ -68,12 +68,5 @@
 
 <picture>
 	<source srcset={srcset()} {sizes} />
-	<img
-		{src}
-		{alt}
-		width={width}
-		height={height}
-		{loading}
-		class={className}
-	/>
+	<img {src} {alt} {width} {height} {loading} class={className} />
 </picture>

@@ -1,7 +1,19 @@
 <script lang="ts">
 	import DefaultBlockView from '$lib/blocks/DefaultBlockView.svelte';
+	import type { ListingResponse } from '$lib/blocks/listing/types';
 
-	let { key, id, data, metadata, properties, path, blocksConfig = {} } = $props();
+	let {
+		key,
+		id,
+		data,
+		metadata,
+		properties,
+		path,
+		blocksConfig = {},
+		listingData = {} as Record<string, ListingResponse>,
+		listingPages = {} as Record<string, number>,
+		paginatedBlockCount = 1
+	} = $props();
 
 	// Guard clause: return early if blocks_layout is undefined
 	const hasBlocksLayout = $derived(data?.blocks_layout !== undefined);
@@ -29,7 +41,7 @@
 	const showHeadline = $derived(!!data?.headline);
 
 	// Allowed nested block types (excludes gridBlock to prevent infinite nesting)
-	const allowedNestedBlocks = ['slate', 'image', 'teaser'];
+	const allowedNestedBlocks = ['slate', 'image', 'teaser', 'listing'];
 
 	// Helper to get block component for a given block type
 	function getBlockComponent(blockType: string | undefined) {
@@ -59,6 +71,11 @@
 						{properties}
 						{path}
 						{blocksConfig}
+						contained={true}
+						initialListingData={listingData[columnId]}
+						page={listingPages[columnId] ?? 1}
+						{listingPages}
+						{paginatedBlockCount}
 					/>
 				</div>
 			</div>

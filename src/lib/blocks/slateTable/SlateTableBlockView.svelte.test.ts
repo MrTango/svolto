@@ -14,14 +14,26 @@ describe('Slate Table Block - Core Component', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'Age' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Age' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] },
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							},
 							{ key: 'cell-2-2', type: 'data', value: [{ type: 'p', children: [{ text: '30' }] }] }
 						]
 					}
@@ -30,7 +42,14 @@ describe('Slate Table Block - Core Component', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Check semantic table structure
@@ -65,7 +84,14 @@ describe('Slate Table Block - Core Component', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Should render the block wrapper but no table structure
@@ -107,10 +133,7 @@ describe('Slate Table Block - Core Component', () => {
 								value: [
 									{
 										type: 'p',
-										children: [
-											{ type: 'em', children: [{ text: 'italic' }] },
-											{ text: ' content' }
-										]
+										children: [{ type: 'em', children: [{ text: 'italic' }] }, { text: ' content' }]
 									}
 								]
 							}
@@ -121,7 +144,14 @@ describe('Slate Table Block - Core Component', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Check that Slate formatting is rendered
@@ -141,21 +171,30 @@ describe('Slate Table Block - Core Component', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Header' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Header' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
-						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [] }
-						]
+						cells: [{ key: 'cell-2-1', type: 'data', value: [] }]
 					}
 				]
 			}
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const td = container.querySelector('td');
@@ -177,7 +216,11 @@ describe('Slate Table Block - Core Component', () => {
 							{
 								key: 'row-1',
 								cells: [
-									{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Test Header' }] }] }
+									{
+										key: 'cell-1-1',
+										type: 'header',
+										value: [{ type: 'p', children: [{ text: 'Test Header' }] }]
+									}
 								]
 							}
 						]
@@ -211,21 +254,37 @@ describe('Slate Table Block - Display Options', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'Age' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Age' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] },
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							},
 							{ key: 'cell-2-2', type: 'data', value: [{ type: 'p', children: [{ text: '30' }] }] }
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Bob' }] }] },
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Bob' }] }]
+							},
 							{ key: 'cell-3-2', type: 'data', value: [{ type: 'p', children: [{ text: '25' }] }] }
 						]
 					}
@@ -238,7 +297,14 @@ describe('Slate Table Block - Display Options', () => {
 		// Test with hideHeaders = false (default)
 		const dataWithHeaders = createTableData({ hideHeaders: false });
 		const { container: container1 } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data: dataWithHeaders, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data: dataWithHeaders,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		expect(container1.querySelector('thead')).toBeInTheDocument();
@@ -247,7 +313,14 @@ describe('Slate Table Block - Display Options', () => {
 		// Test with hideHeaders = true
 		const dataWithHiddenHeaders = createTableData({ hideHeaders: true });
 		const { container: container2 } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data: dataWithHiddenHeaders, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data: dataWithHiddenHeaders,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		expect(container2.querySelector('thead')).not.toBeInTheDocument();
@@ -266,7 +339,14 @@ describe('Slate Table Block - Display Options', () => {
 		});
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const table = container.querySelector('table');
@@ -282,7 +362,14 @@ describe('Slate Table Block - Display Options', () => {
 		const data = createTableData({ fixed: true });
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const table = container.querySelector('table');
@@ -303,7 +390,14 @@ describe('Slate Table Block - Display Options', () => {
 		});
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const table = container.querySelector('table');
@@ -334,29 +428,61 @@ describe('Slate Table Block - Sorting Functionality', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'City' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'City' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Charlie' }] }] },
-							{ key: 'cell-2-2', type: 'data', value: [{ type: 'p', children: [{ text: 'Berlin' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Charlie' }] }]
+							},
+							{
+								key: 'cell-2-2',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Berlin' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] },
-							{ key: 'cell-3-2', type: 'data', value: [{ type: 'p', children: [{ text: 'Munich' }] }] }
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							},
+							{
+								key: 'cell-3-2',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Munich' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-4',
 						cells: [
-							{ key: 'cell-4-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Bob' }] }] },
-							{ key: 'cell-4-2', type: 'data', value: [{ type: 'p', children: [{ text: 'Hamburg' }] }] }
+							{
+								key: 'cell-4-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Bob' }] }]
+							},
+							{
+								key: 'cell-4-2',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Hamburg' }] }]
+							}
 						]
 					}
 				]
@@ -368,7 +494,14 @@ describe('Slate Table Block - Sorting Functionality', () => {
 		const data = createSortableTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCells = container.querySelectorAll('th');
@@ -390,7 +523,14 @@ describe('Slate Table Block - Sorting Functionality', () => {
 		const data = createSortableTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -447,25 +587,41 @@ describe('Slate Table Block - Sorting Functionality', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Zurich' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Zurich' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Aarau' }] }] }
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Aarau' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-4',
 						cells: [
-							{ key: 'cell-4-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Osterreich' }] }] }
+							{
+								key: 'cell-4-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Osterreich' }] }]
+							}
 						]
 					}
 				]
@@ -473,7 +629,14 @@ describe('Slate Table Block - Sorting Functionality', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: { language: 'de' }, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: { language: 'de' },
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -491,7 +654,14 @@ describe('Slate Table Block - Sorting Functionality', () => {
 		const data = createSortableTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCells = container.querySelectorAll('th');
@@ -515,13 +685,21 @@ describe('Slate Table Block - Sorting Functionality', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							}
 						]
 					}
 				]
@@ -529,7 +707,14 @@ describe('Slate Table Block - Sorting Functionality', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -553,21 +738,37 @@ describe('Slate Table Block - Accessibility', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'Age' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Age' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] },
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							},
 							{ key: 'cell-2-2', type: 'data', value: [{ type: 'p', children: [{ text: '30' }] }] }
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Bob' }] }] },
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Bob' }] }]
+							},
 							{ key: 'cell-3-2', type: 'data', value: [{ type: 'p', children: [{ text: '25' }] }] }
 						]
 					}
@@ -580,7 +781,14 @@ describe('Slate Table Block - Accessibility', () => {
 		const data = createSortableTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCells = container.querySelectorAll('th');
@@ -610,7 +818,14 @@ describe('Slate Table Block - Accessibility', () => {
 		const sortableData = createSortableTableData();
 
 		const { container: sortableContainer } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data: sortableData, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data: sortableData,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const sortableHeaders = sortableContainer.querySelectorAll('th');
@@ -625,14 +840,26 @@ describe('Slate Table Block - Accessibility', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'Age' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Age' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] },
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							},
 							{ key: 'cell-2-2', type: 'data', value: [{ type: 'p', children: [{ text: '30' }] }] }
 						]
 					}
@@ -641,7 +868,14 @@ describe('Slate Table Block - Accessibility', () => {
 		};
 
 		const { container: nonSortableContainer } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data: nonSortableData, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data: nonSortableData,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const nonSortableHeaders = nonSortableContainer.querySelectorAll('th');
@@ -653,7 +887,14 @@ describe('Slate Table Block - Accessibility', () => {
 		const data = createSortableTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -675,7 +916,14 @@ describe('Slate Table Block - Accessibility', () => {
 		const data = createSortableTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -710,14 +958,26 @@ describe('Slate Table Block - Styling and Responsive', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'Age' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Age' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] },
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							},
 							{ key: 'cell-2-2', type: 'data', value: [{ type: 'p', children: [{ text: '30' }] }] }
 						]
 					}
@@ -730,7 +990,14 @@ describe('Slate Table Block - Styling and Responsive', () => {
 		const data = createTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Check that the table is wrapped in a scroll container
@@ -746,7 +1013,14 @@ describe('Slate Table Block - Styling and Responsive', () => {
 		const data = createTableData();
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Check the block wrapper class
@@ -762,7 +1036,14 @@ describe('Slate Table Block - Styling and Responsive', () => {
 		const sortableData = createTableData({ sortable: true });
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data: sortableData, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data: sortableData,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const table = container.querySelector('table');
@@ -786,19 +1067,31 @@ describe('Slate Table Block - Integration Tests', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Charlie' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Charlie' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] }
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							}
 						]
 					},
 					{
@@ -812,7 +1105,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Initial order (unsorted): Charlie, Alice, Bob
@@ -838,19 +1138,31 @@ describe('Slate Table Block - Integration Tests', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Charlie' }] }] }
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Charlie' }] }]
+							}
 						]
 					},
 					{
@@ -864,7 +1176,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -888,25 +1207,41 @@ describe('Slate Table Block - Integration Tests', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Item' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Item' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Item 10' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Item 10' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Item 2' }] }] }
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Item 2' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-4',
 						cells: [
-							{ key: 'cell-4-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Item 1' }] }] }
+							{
+								key: 'cell-4-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Item 1' }] }]
+							}
 						]
 					}
 				]
@@ -914,7 +1249,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -934,8 +1276,16 @@ describe('Slate Table Block - Integration Tests', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Column A' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'Column B' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Column A' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Column B' }] }]
+							}
 						]
 					}
 				]
@@ -943,7 +1293,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Table should render with header row
@@ -968,7 +1325,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		const data = {};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Block wrapper should exist but no table
@@ -988,7 +1352,11 @@ describe('Slate Table Block - Integration Tests', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Resource' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Resource' }] }]
+							}
 						]
 					},
 					{
@@ -1020,7 +1388,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		// Link should be rendered in the table cell
@@ -1039,19 +1414,31 @@ describe('Slate Table Block - Integration Tests', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Zara' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Zara' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Adam' }] }] }
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Adam' }] }]
+							}
 						]
 					}
 				]
@@ -1059,7 +1446,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCell = container.querySelector('th');
@@ -1089,22 +1483,46 @@ describe('Slate Table Block - Integration Tests', () => {
 					{
 						key: 'row-1',
 						cells: [
-							{ key: 'cell-1-1', type: 'header', value: [{ type: 'p', children: [{ text: 'Name' }] }] },
-							{ key: 'cell-1-2', type: 'header', value: [{ type: 'p', children: [{ text: 'City' }] }] }
+							{
+								key: 'cell-1-1',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'Name' }] }]
+							},
+							{
+								key: 'cell-1-2',
+								type: 'header',
+								value: [{ type: 'p', children: [{ text: 'City' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-2',
 						cells: [
-							{ key: 'cell-2-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Charlie' }] }] },
-							{ key: 'cell-2-2', type: 'data', value: [{ type: 'p', children: [{ text: 'Berlin' }] }] }
+							{
+								key: 'cell-2-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Charlie' }] }]
+							},
+							{
+								key: 'cell-2-2',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Berlin' }] }]
+							}
 						]
 					},
 					{
 						key: 'row-3',
 						cells: [
-							{ key: 'cell-3-1', type: 'data', value: [{ type: 'p', children: [{ text: 'Alice' }] }] },
-							{ key: 'cell-3-2', type: 'data', value: [{ type: 'p', children: [{ text: 'Munich' }] }] }
+							{
+								key: 'cell-3-1',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Alice' }] }]
+							},
+							{
+								key: 'cell-3-2',
+								type: 'data',
+								value: [{ type: 'p', children: [{ text: 'Munich' }] }]
+							}
 						]
 					}
 				]
@@ -1112,7 +1530,14 @@ describe('Slate Table Block - Integration Tests', () => {
 		};
 
 		const { container } = render(SlateTableBlockView, {
-			props: { key: 'test-key', id: 'test-id', data, properties: {}, path: '/test', metadata: undefined }
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				properties: {},
+				path: '/test',
+				metadata: undefined
+			}
 		});
 
 		const headerCells = container.querySelectorAll('th');

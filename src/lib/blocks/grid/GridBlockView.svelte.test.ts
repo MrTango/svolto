@@ -466,3 +466,97 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 		});
 	});
 });
+
+describe('GridBlockView - Nested Listing Blocks', () => {
+	test('listing blocks render within grid columns', () => {
+		// Create data with a listing block in a grid column
+		const data = {
+			blocks: {
+				'col-1': {
+					'@type': 'listing',
+					querystring: {
+						query: [{ i: 'portal_type', o: 'plone.app.querystring.operation.selection.any', v: ['Document'] }]
+					}
+				},
+				'col-2': {
+					'@type': 'slate',
+					value: [{ type: 'p', children: [{ text: 'Column 2 content' }] }]
+				}
+			},
+			blocks_layout: { items: ['col-1', 'col-2'] }
+		};
+
+		const { container } = render(GridBlockView, {
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				blocksConfig: blocks,
+				path: '/test-path'
+			}
+		});
+
+		// Verify grid renders with two columns
+		const columns = container.querySelectorAll('.grid-column');
+		expect(columns).toHaveLength(2);
+
+		// Verify that a VoltoBlock wrapper exists for each column
+		const voltoBlocks = container.querySelectorAll('.VoltoBlock');
+		expect(voltoBlocks).toHaveLength(2);
+
+		// Verify listing block renders (it should show loading state or content)
+		// The listing block is recognized and rendered (not fallback to DefaultBlockView)
+		const listingBlock = container.querySelector('.block.listing');
+		expect(listingBlock).toBeInTheDocument();
+	});
+
+	test('listing component receives correct props from grid', () => {
+		// Create mock listing data to pass through
+		const listingData = {
+			'listing-1': {
+				items: [
+					{ '@id': 'http://example.com/doc1', '@type': 'Document', title: 'Test Doc 1' }
+				],
+				total: 1
+			}
+		};
+
+		const data = {
+			blocks: {
+				'listing-1': {
+					'@type': 'listing',
+					querystring: {
+						query: [{ i: 'portal_type', o: 'plone.app.querystring.operation.selection.any', v: ['Document'] }]
+					}
+				}
+			},
+			blocks_layout: { items: ['listing-1'] }
+		};
+
+		const { container } = render(GridBlockView, {
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				blocksConfig: blocks,
+				path: '/test-path',
+				listingData,
+				currentPage: 1,
+				paginatedBlockCount: 1
+			}
+		});
+
+		// Verify grid renders with one column
+		const columns = container.querySelectorAll('.grid-column');
+		expect(columns).toHaveLength(1);
+
+		// Verify the listing block is rendered (it receives initialListingData)
+		const listingBlock = container.querySelector('.block.listing');
+		expect(listingBlock).toBeInTheDocument();
+
+		// Verify the listing is NOT in loading state (since initialListingData was provided)
+		// The listing should render items or empty state, not loading spinner
+		const loadingSpinner = container.querySelector('.listing-loading');
+		expect(loadingSpinner).not.toBeInTheDocument();
+	});
+});

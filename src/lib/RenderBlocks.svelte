@@ -1,6 +1,16 @@
 <script lang="ts">
 	import DefaultBlockView from '$lib/blocks/DefaultBlockView.svelte';
-	let { content, blocksConfig = {}, pathname, metadata = undefined } = $props();
+	import type { ListingResponse } from '$lib/blocks/listing/types';
+
+	let {
+		content,
+		blocksConfig = {},
+		pathname,
+		metadata = undefined,
+		listingData = {} as Record<string, ListingResponse>,
+		listingPages = {} as Record<string, number>,
+		paginatedBlockCount = 1
+	} = $props();
 </script>
 
 {#if content?.blocks_layout?.items}
@@ -21,6 +31,11 @@
 				properties={content}
 				path={pathname}
 				{blocksConfig}
+				initialListingData={listingData[block]}
+				page={listingPages[block] ?? 1}
+				{listingData}
+				{listingPages}
+				{paginatedBlockCount}
 			/>
 		</div>
 	{/each}
