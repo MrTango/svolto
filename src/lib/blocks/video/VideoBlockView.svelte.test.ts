@@ -3,6 +3,13 @@ import '@testing-library/jest-dom/vitest';
 import { render } from '@testing-library/svelte';
 import VideoBlockView from './VideoBlockView.svelte';
 
+const defaultProps = {
+	metadata: {},
+	properties: {},
+	path: '/',
+	blocksConfig: {}
+};
+
 describe('VideoBlockView - YouTube Videos', () => {
 	test('renders YouTube video as iframe with privacy-enhanced embed URL', () => {
 		const data = {
@@ -10,7 +17,7 @@ describe('VideoBlockView - YouTube Videos', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const iframe = container.querySelector('iframe');
@@ -28,7 +35,7 @@ describe('VideoBlockView - Vimeo Videos', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const iframe = container.querySelector('iframe');
@@ -46,7 +53,7 @@ describe('VideoBlockView - Self-Hosted Videos', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const video = container.querySelector('video');
@@ -62,7 +69,7 @@ describe('VideoBlockView - Self-Hosted Videos', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const video = container.querySelector('video');
@@ -76,7 +83,7 @@ describe('VideoBlockView - Edge Cases', () => {
 		const data = {};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const videoBlock = container.querySelector('.block.video');
@@ -92,7 +99,7 @@ describe('VideoBlockView - Alignment CSS Classes', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const videoBlock = container.querySelector('.block.video');
@@ -106,7 +113,7 @@ describe('VideoBlockView - Alignment CSS Classes', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const videoBlock = container.querySelector('.block.video');
@@ -120,7 +127,7 @@ describe('VideoBlockView - Alignment CSS Classes', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const videoBlock = container.querySelector('.block.video');
@@ -133,7 +140,7 @@ describe('VideoBlockView - Alignment CSS Classes', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const videoBlock = container.querySelector('.block.video');
@@ -149,7 +156,7 @@ describe('VideoBlockView - Alignment CSS Classes', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const videoBlock = container.querySelector('.block.video');
@@ -164,7 +171,7 @@ describe('VideoBlockView - Video Wrapper Container', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const wrapper = container.querySelector('.video-wrapper');
@@ -178,7 +185,7 @@ describe('VideoBlockView - Video Wrapper Container', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const wrapper = container.querySelector('.video-wrapper');
@@ -192,7 +199,7 @@ describe('VideoBlockView - Video Wrapper Container', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const wrapper = container.querySelector('.video-wrapper');
@@ -208,7 +215,7 @@ describe('VideoBlockView - Iframe Attributes', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const iframe = container.querySelector('iframe');
@@ -225,7 +232,7 @@ describe('VideoBlockView - Iframe Attributes', () => {
 		};
 
 		const { container } = render(VideoBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const iframe = container.querySelector('iframe');

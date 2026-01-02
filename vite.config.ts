@@ -11,7 +11,23 @@ export default defineConfig({
 			'/Plone': {
 				target: 'http://backend:8080',
 				changeOrigin: true
+			},
+			// Proxy @@images and @@download requests to Plone backend
+			// These paths have /Plone stripped in frontend URLs but backend needs it
+			'^/.*@@images': {
+				target: 'http://backend:8080',
+				changeOrigin: true,
+				rewrite: (path) => `/Plone${path}`
+			},
+			'^/.*@@download': {
+				target: 'http://backend:8080',
+				changeOrigin: true,
+				rewrite: (path) => `/Plone${path}`
 			}
+		},
+		watch: {
+			ignored: ['**/volto-svolto/**', '**/claude-code/**', '**/core.*', '**/.claude/**'],
+			followSymlinks: false
 		}
 	},
 	test: {

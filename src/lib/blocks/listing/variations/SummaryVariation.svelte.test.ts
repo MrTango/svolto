@@ -103,6 +103,11 @@ describe('SummaryVariation', () => {
 		expect(images).toHaveLength(2);
 		expect(images[0]).toHaveAttribute('src');
 		expect(images[1]).toHaveAttribute('src');
+
+		// Verify image paths don't include /Plone prefix (should be stripped)
+		const imgSrc = images[0].getAttribute('src');
+		expect(imgSrc).not.toContain('/Plone');
+		expect(imgSrc).toMatch(/^\/news\/article-1\/@@images\//);
 	});
 
 	test('handles items without images gracefully', () => {

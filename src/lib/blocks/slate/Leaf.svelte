@@ -22,9 +22,10 @@
 	import Ul from './Ul.svelte';
 	import Underline from './Underline.svelte';
 
-	let { node, parent } = $props();
+	let { node, parent, blockId = '' } = $props();
 
-	const NodeTypes: Record<string, { view: typeof P }> = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const NodeTypes: Record<string, { view: any }> = {
 		// Block elements
 		p: { view: P },
 		h2: { view: H2 },
@@ -52,6 +53,8 @@
 
 	type NodeType = keyof typeof NodeTypes;
 
+	const HEADING_TYPES = ['h2', 'h3', 'h4', 'h5', 'h6'];
+
 	// Determine the node type from the node itself, not the parent
 	// Text nodes (with only 'text' property) get 'text' type
 	// Element nodes have a 'type' property
@@ -69,14 +72,27 @@
 	}
 
 	let SlateComponent = $derived(NodeTypes[nodeType].view);
+	let isHeading = $derived(HEADING_TYPES.includes(nodeType));
 </script>
 
-<SlateComponent {node} {parent}>
-	{#if SlateText.isText(node)}
-		{node.text}
-	{:else if node?.children}
-		{#each node.children as childNode}
-			<Leaf node={childNode} parent={node} />
-		{/each}
-	{/if}
-</SlateComponent>
+{#if isHeading}
+	<SlateComponent {node} {parent} {blockId}>
+		{#if SlateText.isText(node)}
+			{node.text}
+		{:else if node?.children}
+			{#each node.children as childNode}
+				<Leaf node={childNode} parent={node} {blockId} />
+			{/each}
+		{/if}
+	</SlateComponent>
+{:else}
+	<SlateComponent {node} {parent}>
+		{#if SlateText.isText(node)}
+			{node.text}
+		{:else if node?.children}
+			{#each node.children as childNode}
+				<Leaf node={childNode} parent={node} {blockId} />
+			{/each}
+		{/if}
+	</SlateComponent>
+{/if}

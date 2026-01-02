@@ -3,6 +3,13 @@ import '@testing-library/jest-dom/vitest';
 import { render } from '@testing-library/svelte';
 import ImageBlockView from './ImageBlockView.svelte';
 
+const defaultProps = {
+	metadata: {},
+	properties: {},
+	path: '/',
+	blocksConfig: {}
+};
+
 describe('ImageBlockView - ResponsiveImage Integration', () => {
 	test('renders ResponsiveImage component with picture/source/img structure', () => {
 		const data = {
@@ -26,7 +33,7 @@ describe('ImageBlockView - ResponsiveImage Integration', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Verify picture element is rendered (from ResponsiveImage)
@@ -64,7 +71,7 @@ describe('ImageBlockView - ResponsiveImage Integration', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Verify srcset is constructed correctly from scales
@@ -104,7 +111,7 @@ describe('ImageBlockView - ResponsiveImage Integration', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Verify wrapper element has both 'block' and 'image' classes
@@ -142,7 +149,7 @@ describe('ImageBlockView - URL Normalization', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Verify srcset does NOT contain internal hostname
@@ -182,7 +189,7 @@ describe('ImageBlockView - URL Normalization', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Should still work with relative URLs
@@ -212,7 +219,7 @@ describe('ImageBlockView - URL Normalization', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const source = container.querySelector('picture source');

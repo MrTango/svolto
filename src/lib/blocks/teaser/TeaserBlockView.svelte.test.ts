@@ -3,6 +3,12 @@ import '@testing-library/jest-dom/vitest';
 import { render } from '@testing-library/svelte';
 import TeaserBlockView from './TeaserBlockView.svelte';
 
+const defaultProps = {
+	metadata: {},
+	properties: {},
+	path: '/'
+};
+
 // Task Group 1: Base structure tests for TeaserBlockView
 describe('Teaser Block - Base Structure', () => {
 	test('renders with minimal valid data', () => {
@@ -18,7 +24,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const teaserBlock = container.querySelector('.block.teaser');
@@ -38,7 +44,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const link = container.querySelector('a.teaser-item');
@@ -59,7 +65,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const heading = container.querySelector('h2');
@@ -80,7 +86,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const teaserBlock = container.querySelector('.block.teaser');
@@ -108,7 +114,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const kicker = container.querySelector('.headline');
@@ -129,7 +135,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const description = container.querySelector('.description');
@@ -151,7 +157,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const description = container.querySelector('.description');
@@ -174,7 +180,7 @@ describe('Teaser Block - Base Structure', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const heading = container.querySelector('h2');
@@ -216,7 +222,7 @@ describe('Teaser Block - Responsive Image Handling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const picture = container.querySelector('picture');
@@ -254,7 +260,7 @@ describe('Teaser Block - Responsive Image Handling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const source = container.querySelector('picture source');
@@ -279,7 +285,7 @@ describe('Teaser Block - Responsive Image Handling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const imageWrapper = container.querySelector('.image-wrapper');
@@ -319,7 +325,7 @@ describe('Teaser Block - Responsive Image Handling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const img = container.querySelector('picture img');
@@ -345,7 +351,7 @@ describe('Teaser Block - Alignment Options', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const teaserBlock = container.querySelector('.block.teaser');
@@ -367,7 +373,7 @@ describe('Teaser Block - Alignment Options', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const teaserBlock = container.querySelector('.block.teaser');
@@ -389,7 +395,7 @@ describe('Teaser Block - Alignment Options', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const teaserBlock = container.querySelector('.block.teaser');
@@ -409,7 +415,7 @@ describe('Teaser Block - Alignment Options', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const teaserBlock = container.querySelector('.block.teaser');
@@ -431,7 +437,7 @@ describe('Teaser Block - Alignment Options', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Verify alignment class is on the block container (.block.teaser)
@@ -461,7 +467,7 @@ describe('Teaser Block - Event Template', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Check that event date info is rendered
@@ -490,7 +496,7 @@ describe('Teaser Block - Event Template', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Time element should not be present for whole day events
@@ -518,7 +524,7 @@ describe('Teaser Block - Event Template', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Time element should be present
@@ -543,7 +549,7 @@ describe('Teaser Block - Event Template', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const locationElement = container.querySelector('.event-location');
@@ -570,7 +576,7 @@ describe('Teaser Block - Event Template', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Check standard teaser elements
@@ -606,7 +612,7 @@ describe('Teaser Block - CSS and Responsive Styling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Check that teaser-item has the default modifier class
@@ -631,7 +637,7 @@ describe('Teaser Block - CSS and Responsive Styling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Check that teaser-item has the event modifier class
@@ -654,7 +660,7 @@ describe('Teaser Block - CSS and Responsive Styling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Check that teaser-item has the no-image modifier class
@@ -689,7 +695,7 @@ describe('Teaser Block - CSS and Responsive Styling', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Check that teaser-item does NOT have the no-image modifier class
@@ -734,7 +740,7 @@ describe('Teaser Block - Integration Tests', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Verify block structure
@@ -805,7 +811,7 @@ describe('Teaser Block - Integration Tests', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Verify event modifier class
@@ -853,7 +859,7 @@ describe('Teaser Block - Edge Cases', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Block container should still render
@@ -869,7 +875,7 @@ describe('Teaser Block - Edge Cases', () => {
 		const data = {};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Block container should still render
@@ -883,7 +889,7 @@ describe('Teaser Block - Edge Cases', () => {
 
 	test('handles null data gracefully', () => {
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data: null }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data: null }
 		});
 
 		// Block container should still render
@@ -912,7 +918,7 @@ describe('Teaser Block - Edge Cases', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Event info should be present
@@ -948,7 +954,7 @@ describe('Teaser Block - Edge Cases', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Event date should show both start and end dates
@@ -976,7 +982,7 @@ describe('Teaser Block - Edge Cases', () => {
 		};
 
 		const { container } = render(TeaserBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Teaser should still render

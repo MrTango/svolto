@@ -3,10 +3,17 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/svelte';
 import DescriptionBlockView from './DescriptionBlockView.svelte';
 
+const defaultProps = {
+	metadata: undefined,
+	path: '/',
+	blocksConfig: {}
+};
+
 describe('DescriptionBlockView', () => {
 	test('renders description from properties.description', () => {
 		render(DescriptionBlockView, {
 			props: {
+				...defaultProps,
 				id: 'test-block',
 				data: {},
 				properties: { description: 'Test description from properties' }
@@ -22,6 +29,7 @@ describe('DescriptionBlockView', () => {
 	test('renders description from metadata.description (takes precedence over properties)', () => {
 		render(DescriptionBlockView, {
 			props: {
+				...defaultProps,
 				id: 'test-block',
 				data: {},
 				metadata: { description: 'Description from metadata' },
@@ -36,6 +44,7 @@ describe('DescriptionBlockView', () => {
 	test('renders empty paragraph when no description is provided', () => {
 		const { container } = render(DescriptionBlockView, {
 			props: {
+				...defaultProps,
 				id: 'test-block',
 				data: {},
 				properties: {}
@@ -50,6 +59,7 @@ describe('DescriptionBlockView', () => {
 	test('truncates description at word boundary when maxLength is set', () => {
 		render(DescriptionBlockView, {
 			props: {
+				...defaultProps,
 				id: 'test-block',
 				data: { maxLength: 20 },
 				properties: { description: 'This is a longer description that should be truncated' }
@@ -63,6 +73,7 @@ describe('DescriptionBlockView', () => {
 	test('truncates at character limit when no word boundary found', () => {
 		render(DescriptionBlockView, {
 			props: {
+				...defaultProps,
 				id: 'test-block',
 				data: { maxLength: 10 },
 				properties: { description: 'Averylongwordwithnospaces' }
@@ -76,6 +87,7 @@ describe('DescriptionBlockView', () => {
 	test('falls back to properties when metadata is undefined', () => {
 		render(DescriptionBlockView, {
 			props: {
+				...defaultProps,
 				id: 'test-block',
 				data: {},
 				metadata: undefined,
@@ -89,6 +101,7 @@ describe('DescriptionBlockView', () => {
 	test('does not truncate when description is shorter than maxLength', () => {
 		render(DescriptionBlockView, {
 			props: {
+				...defaultProps,
 				id: 'test-block',
 				data: { maxLength: 100 },
 				properties: { description: 'Short text' }

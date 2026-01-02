@@ -103,3 +103,7 @@ This results in a simpler architecture, clearer separation of concerns, and the 
 - **Compiled Output:** Svelte's compiler produces minimal, efficient JavaScript
 - **Code Splitting:** Route-based chunking for optimal loading
 - **Asset Optimization:** Proper caching, compression, and CDN-friendly output
+
+### CMS structure and optimization Rules
+
+read and respect agent-os/product/cms-frontend-rules.md for all developments

@@ -65,6 +65,7 @@
 		</div>
 	{:else if videoSource === 'self-hosted' && videoSrc}
 		<div class="video-wrapper">
+			<!-- svelte-ignore a11y_media_has_caption -->
 			<video src={videoSrc} controls poster={posterImage}></video>
 		</div>
 	{/if}

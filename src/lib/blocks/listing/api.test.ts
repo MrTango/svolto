@@ -1,10 +1,16 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
 	slugifyBlockId,
 	countPaginatedBlocks,
 	parsePageFromUrlForBlock,
-	buildPageUrlForBlock
+	buildPageUrlForBlock,
+	fetchListingData
 } from './api';
+
+// Mock env module
+vi.mock('$env/static/public', () => ({
+	PUBLIC_API_PATH: 'http://localhost:8088/Plone'
+}));
 
 describe('Pagination Utilities', () => {
 	describe('slugifyBlockId', () => {
@@ -98,5 +104,59 @@ describe('Pagination Utilities', () => {
 			const result = buildPageUrlForBlock('http://example.com/path', 1, 'block-123', 1);
 			expect(result).toBe('/path');
 		});
+	});
+});
+
+describe('fetchListingData', () => {
+	const originalFetch = globalThis.fetch;
+
+	beforeEach(() => {
+		globalThis.fetch = vi.fn();
+	});
+
+	afterEach(() => {
+		globalThis.fetch = originalFetch;
+		vi.restoreAllMocks();
+	});
+
+	test('includes metadata_fields: "_all" in request body for image data', async () => {
+		const mockResponse = {
+			items: [{ '@id': 'test', title: 'Test', image_field: 'image', image_scales: {} }],
+			items_total: 1
+		};
+		vi.mocked(globalThis.fetch).mockResolvedValue({
+			ok: true,
+			json: () => Promise.resolve(mockResponse)
+		} as Response);
+
+		const querystring = {
+			query: [
+				{
+					i: 'portal_type',
+					o: 'plone.app.querystring.operation.selection.any',
+					v: 'News Item'
+				}
+			]
+		};
+
+		await fetchListingData(querystring, 0, 10, 'http://test.plone/');
+
+		expect(globalThis.fetch).toHaveBeenCalledTimes(1);
+		const [, fetchOptions] = vi.mocked(globalThis.fetch).mock.calls[0];
+		const requestBody = JSON.parse(fetchOptions?.body as string);
+
+		expect(requestBody.metadata_fields).toBe('_all');
+	});
+
+	test('returns empty response when no querystring provided', async () => {
+		const result = await fetchListingData(undefined);
+		expect(result.items).toEqual([]);
+		expect(result.total).toBe(0);
+	});
+
+	test('returns empty response when querystring has no query', async () => {
+		const result = await fetchListingData({ query: [] });
+		expect(result.items).toEqual([]);
+		expect(result.total).toBe(0);
 	});
 });

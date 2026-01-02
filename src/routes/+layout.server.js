@@ -6,6 +6,7 @@ import {
 	countPaginatedBlocks,
 	parsePageFromUrlForBlock
 } from '$lib/blocks/listing/api';
+import { fetchNavigation, DEFAULT_NAV_DEPTH } from '$lib/plone/navigation/api';
 
 export const prerender = false;
 export const trailingSlash = 'always';
@@ -54,16 +55,45 @@ function findAllListingBlocks(blocks, blocksLayoutItems) {
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load(event) {
+	console.log('[SERVER] Load function started');
 	let currentPath = '/';
 	if (event.params.path != undefined) {
 		currentPath = event.params.path;
 	}
-	console.log(currentPath);
+	console.log('[SERVER] Loading path:', currentPath);
 
 	const { getContent } = serverClient;
+	console.log('[SERVER] Got getContent function');
 
-	const data = await getContent({ path: currentPath });
-	console.log(await data);
+	// Fetch content and navigation in parallel
+	let data;
+	/** @type {import('$lib/plone/navigation/types').NavigationData} */
+	let navigation = { items: [] };
+
+	try {
+		console.log('[SERVER] Calling getContent and fetchNavigation...');
+		const [contentResult, navResult] = await Promise.all([
+			getContent({ path: currentPath }),
+			fetchNavigation(DEFAULT_NAV_DEPTH, API_PATH)
+		]);
+		data = contentResult;
+		navigation = navResult;
+		console.log('[SERVER] getContent returned, title:', data?.title);
+		console.log('[SERVER] Navigation items count:', navigation.items.length);
+	} catch (error) {
+		console.error('[SERVER] Error fetching content from Plone:', error);
+		// Return minimal fallback data
+		return {
+			title: 'Error loading content',
+			'@id': currentPath,
+			blocks: {},
+			blocks_layout: { items: [] },
+			listingData: {},
+			listingPages: {},
+			paginatedBlockCount: 0,
+			navigation
+		};
+	}
 
 	// Pre-fetch listing block data
 	/** @type {Record<string, import('$lib/blocks/listing/types').ListingResponse>} */
@@ -84,7 +114,8 @@ export async function load(event) {
 		const allListingBlocks = findAllListingBlocks(data.blocks, data.blocks_layout.items);
 
 		// Fetch data for each listing block with its specific page
-		for (const { blockId, blockData } of allListingBlocks) {
+		// Use Promise.all with individual try-catch for better error isolation
+		const fetchPromises = allListingBlocks.map(async ({ blockId, blockData }) => {
 			// Parse block-specific page from URL
 			const blockPage = parsePageFromUrlForBlock(event.url, blockId, paginatedBlockCount);
 			listingPages[blockId] = blockPage;
@@ -93,15 +124,24 @@ export async function load(event) {
 				const batchSize = blockData.b_size || blockData.querystring?.b_size || DEFAULT_BATCH_SIZE;
 				const bStart = (blockPage - 1) * batchSize;
 
-				listingData[blockId] = await fetchListingData(
-					blockData.querystring,
-					bStart,
-					batchSize,
-					API_PATH
-				);
+				try {
+					listingData[blockId] = await fetchListingData(
+						blockData.querystring,
+						bStart,
+						batchSize,
+						API_PATH
+					);
+				} catch (error) {
+					console.error(`Error fetching listing data for block ${blockId}:`, error);
+					listingData[blockId] = { items: [], total: 0, batching: {} };
+				}
 			}
-		}
+		});
+
+		await Promise.all(fetchPromises);
+		console.log('[SERVER] All listing data fetched');
 	}
 
-	return { ...data, listingData, listingPages, paginatedBlockCount };
+	console.log('[SERVER] Returning data');
+	return { ...data, listingData, listingPages, paginatedBlockCount, navigation };
 }

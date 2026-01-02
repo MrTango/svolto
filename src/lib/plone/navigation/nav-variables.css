@@ -1,0 +1,165 @@
+/* Navigation Mega Menu CSS Custom Properties
+   These variables enable theme customization for the navigation components.
+   Override these variables to customize colors, spacing, and typography.
+*/
+
+:root {
+	/* ==============================================
+	   Color Variables
+	   ============================================== */
+
+	/* Primary background color for navigation panels */
+	--nav-bg: #ffffff;
+	--nav-text: #1f2937;
+
+	/* Mega menu panel background - teal brand color */
+	--nav-panel-bg: #0097a7;
+
+	/* Active indicator for current page */
+	--nav-active-indicator: #1f2937;
+
+	/* Focus ring color */
+	--nav-focus-color: #0097a7;
+	--nav-focus-ring-offset: 2px;
+
+	/* Panel text colors */
+	--nav-panel-text: #ffffff;
+	--nav-panel-link-hover-bg: rgba(255, 255, 255, 0.1);
+
+	/* ==============================================
+	   Spacing Variables
+	   ============================================== */
+
+	/* Navigation bar padding */
+	--nav-padding: 0.75rem 1rem;
+	--nav-padding-y: 0.75rem;
+	--nav-padding-x: 1rem;
+
+	/* Gap between Level 1 items */
+	--nav-gap: 0.5rem;
+
+	/* Column gap in mega menu panel */
+	--nav-column-gap: 2rem;
+
+	/* Panel padding */
+	--nav-panel-padding: 2rem;
+	--nav-panel-padding-x: 2rem;
+	--nav-panel-padding-y: 1.5rem;
+
+	/* ==============================================
+	   Typography Variables
+	   ============================================== */
+
+	/* Base navigation font size */
+	--nav-font-size: 1rem;
+
+	/* Level 2 header font weight */
+	--nav-l2-font-weight: 600;
+
+	/* Level 2 header font size */
+	--nav-l2-font-size: 1rem;
+
+	/* Level 3 item font size */
+	--nav-l3-font-size: 0.9375rem;
+
+	/* Level 3 item font weight */
+	--nav-l3-font-weight: 400;
+
+	/* ==============================================
+	   Desktop Mega Menu Specific Variables
+	   ============================================== */
+
+	/* Level 1 bar */
+	--nav-mega-bar-height: auto;
+	--nav-mega-item-padding: 0.75rem 1rem;
+
+	/* Active underline */
+	--nav-mega-active-underline-height: 3px;
+	--nav-mega-active-underline-offset: -3px;
+
+	/* Panel layout */
+	--nav-mega-panel-max-height: 80vh;
+	--nav-mega-columns-min-width: 200px;
+
+	/* Close button */
+	--nav-mega-close-btn-size: 44px;
+
+	/* ==============================================
+	   Mobile Navigation Specific Variables
+	   ============================================== */
+
+	/* Mobile overlay */
+	--nav-mobile-bg: #0097a7;
+	--nav-mobile-z-index: 1000;
+	--nav-mobile-trigger-z-index: 1001;
+
+	/* Mobile content padding */
+	--nav-mobile-content-padding-top: 5rem;
+	--nav-mobile-content-padding-bottom: 2rem;
+
+	/* Mobile trigger */
+	--nav-mobile-trigger-color: #0097a7;
+	--nav-mobile-trigger-color-open: #ffffff;
+
+	/* Mobile items */
+	--nav-mobile-item-padding: 0.875rem 1rem;
+	--nav-mobile-item-font-size: 1rem;
+	--nav-mobile-item-font-size-small: 0.9375rem;
+	--nav-mobile-item-color: #ffffff;
+	--nav-mobile-item-hover-bg: rgba(255, 255, 255, 0.1);
+
+	/* Mobile indentation */
+	--nav-mobile-indent-level-2: 2rem;
+	--nav-mobile-indent-level-3: 3rem;
+
+	/* Mobile separator */
+	--nav-mobile-separator-color: rgba(255, 255, 255, 0.2);
+	--nav-mobile-separator-margin: 1rem;
+
+	/* Mobile nested backgrounds */
+	--nav-mobile-nested-bg: rgba(0, 0, 0, 0.1);
+
+	/* Mobile home link */
+	--nav-mobile-home-padding: 0.875rem 1rem;
+	--nav-mobile-home-font-size: 1rem;
+	--nav-mobile-home-color: #ffffff;
+
+	/* Mobile focus */
+	--nav-mobile-focus-color: rgba(255, 255, 255, 0.8);
+
+	/* ==============================================
+	   Light Theme Variations
+	   (Default - variables above represent light theme)
+	   ============================================== */
+
+	/* ==============================================
+	   Dark Theme Variations
+	   Apply these overrides in a dark mode context
+	   ============================================== */
+}
+
+/* Dark mode overrides - can be triggered by class or media query */
+.dark,
+[data-theme='dark'] {
+	--nav-bg: #1f2937;
+	--nav-text: #f9fafb;
+	--nav-active-indicator: #ffffff;
+	--nav-focus-color: #06b6d4;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	:root {
+		--nav-panel-bg: #006874;
+		--nav-active-indicator: #000000;
+		--nav-focus-color: #ffffff;
+		--nav-mobile-separator-color: rgba(255, 255, 255, 0.5);
+	}
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--nav-transition-duration: 0s;
+	}
+}

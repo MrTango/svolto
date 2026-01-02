@@ -1,19 +1,16 @@
-<script>
+<script lang="ts">
 	import Picture from '$lib/plone/Picture.svelte';
-	export let item = {};
+
+	interface ListingItemData {
+		href?: string;
+		title?: string;
+		description?: string;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		image_scales?: Record<string, any>;
+	}
+
+	export let item: ListingItemData = {};
 	const defaultScale = 'preview';
-
-	// function getImageConfig(item, fieldName) {
-	// 	if (!item.image_scales) {
-	// 		return;
-	// 	}
-	// 	const imageConfig = item.image_scales.hasOwnProperty(fieldName)
-	// 		? item.image_scales[fieldName][0]
-	// 		: null;
-	// 	return imageConfig;
-	// }
-
-	// const leadImage = getImageConfig(item, 'image');
 </script>
 
 <div class="listingItem">
@@ -22,9 +19,7 @@
 		<p>{item.description}</p>
 	</div>
 	<div class="imageWrapper">
-		<!-- {#if leadImage} -->
 		<Picture catalogItem={item} {defaultScale} />
-		<!-- {/if} -->
 	</div>
 </div>
 
@@ -39,8 +34,6 @@
 	}
 	.textWrapper {
 		flex: 1 2 300px;
-		// flex-shrink: 2;
-		// flex-grow: 1;
 		padding-right: 1em;
 	}
 	.imageWrapper {

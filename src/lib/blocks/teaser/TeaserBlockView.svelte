@@ -276,15 +276,6 @@
 		padding: 0.5rem 0;
 	}
 
-	/* BEM modifier classes for different teaser types - Task 6.6 */
-	.teaser-item.default {
-		/* Default teaser styling - can be customized */
-	}
-
-	.teaser-item.event {
-		/* Event teaser styling - can be customized */
-	}
-
 	/* Mobile responsive behavior - Task 6.4 */
 	@media (max-width: 768px) {
 		/* Stack all alignments vertically on mobile */

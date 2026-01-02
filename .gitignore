@@ -13,6 +13,9 @@ node_modules
 .DS_Store
 Thumbs.db
 
+# Core dumps
+core.*
+
 # Env
 .env
 .env.*

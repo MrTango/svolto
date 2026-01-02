@@ -127,13 +127,28 @@
 		return imgData?.scales || undefined;
 	}
 
+	// Build base URL for image paths
+	// Uses base_path from image_scales if present (for linked images)
+	// Otherwise falls back to item @id
 	function getImageBaseUrl(item: ListingItem): string {
+		const imgData = getImageData(item);
+		// Use base_path if available (for linked preview images)
+		const basePath = imgData?.base_path;
+		if (basePath) {
+			return basePath.replace(/^\/Plone/, '');
+		}
+		// Fall back to item @id
 		if (!item['@id']) return '';
 		try {
 			const url = new URL(item['@id']);
-			return url.pathname;
+			return url.pathname.replace(/^\/Plone/, '') || '/';
 		} catch {
-			return item['@id'];
+			const id = item['@id'];
+			const ploneIndex = id.indexOf('/Plone');
+			if (ploneIndex !== -1) {
+				return id.substring(ploneIndex + 6) || '/';
+			}
+			return id;
 		}
 	}
 

@@ -6,6 +6,13 @@ import RenderBlocks from '$lib/RenderBlocks.svelte';
 import blocks from '$lib/blocks';
 import { extractPlainText } from './SlateTableBlockView.svelte';
 
+const defaultProps = {
+	metadata: {},
+	properties: {},
+	path: '/',
+	blocksConfig: {}
+};
+
 describe('Slate Table Block - Core Component', () => {
 	test('renders table with header row and data rows', () => {
 		const data = {

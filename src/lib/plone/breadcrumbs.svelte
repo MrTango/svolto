@@ -1,5 +1,10 @@
-<script>
-	export let breadcrumbs = [];
+<script lang="ts">
+	interface BreadcrumbItem {
+		href?: string;
+		title?: string;
+	}
+
+	export let breadcrumbs: BreadcrumbItem[] = [];
 </script>
 
 <ul>

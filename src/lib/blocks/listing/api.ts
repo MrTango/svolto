@@ -59,13 +59,15 @@ export async function fetchListingData(
 			query: QuerystringQuery[];
 			b_start: number;
 			b_size: number;
+			metadata_fields: string;
 			sort_on?: string;
 			sort_order?: string;
 			limit?: number;
 		} = {
 			query: querystring.query,
 			b_start: b_start,
-			b_size: b_size
+			b_size: b_size,
+			metadata_fields: '_all'
 		};
 
 		// Add optional sort parameters if provided

@@ -1,7 +1,11 @@
 <script lang="ts">
-	let { children, node, parent } = $props();
+	import { generateAnchorId, extractTextFromSlateNode } from '../toc/utils';
+
+	let { children, node, parent, blockId = '' } = $props();
+
+	let anchorId = $derived(blockId ? generateAnchorId(blockId, extractTextFromSlateNode(node)) : '');
 </script>
 
-<h2 class="slate-h2">
+<h2 class="slate-h2" id={anchorId || undefined}>
 	{@render children?.()}
 </h2>

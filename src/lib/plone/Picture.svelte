@@ -1,12 +1,33 @@
-<script>
+<script lang="ts">
 	import { PUBLIC_FRONTEND_BASE_URL } from '$env/static/public';
+
+	interface Scale {
+		download: string;
+		width: number;
+		height?: number;
+	}
+
+	interface ImageConfig {
+		scales?: Record<string, Scale>;
+	}
+
+	interface CatalogItem {
+		href?: string;
+		image_scales?: Record<string, ImageConfig[]>;
+	}
+
+	interface ObjectItem {
+		href?: string;
+		[key: string]: unknown;
+	}
+
 	export let defaultScale = 'preview';
 	export let onlyDefaultScale = false;
 	export let fieldName = 'image';
-	export let catalogItem;
-	export let objectItem;
+	export let catalogItem: CatalogItem | undefined = undefined;
+	export let objectItem: ObjectItem | undefined = undefined;
 
-	function getImageConfigFromCatalogItem(item, fieldName) {
+	function getImageConfigFromCatalogItem(item: CatalogItem, fieldName: string): ImageConfig {
 		if (!item.image_scales) {
 			return {};
 		}
@@ -16,14 +37,12 @@
 		return imageConfig;
 	}
 
-	function getImageConfigFromObjectItem(item, fieldName) {
-		// console.log(item)
-		const imageConfig = item.hasOwnProperty(fieldName) ? item[fieldName] : {};
-		// console.log(imageConfig)
+	function getImageConfigFromObjectItem(item: ObjectItem, fieldName: string): ImageConfig {
+		const imageConfig = item.hasOwnProperty(fieldName) ? (item[fieldName] as ImageConfig) : {};
 		return imageConfig;
 	}
 
-	function generateSrcSet(imageConfig, basePath) {
+	function generateSrcSet(imageConfig: ImageConfig, basePath: string): string {
 		if (!imageConfig) {
 			return '';
 		}
@@ -35,25 +54,24 @@
 			if (srcSet) {
 				srcSet = srcSet + ',';
 			}
-			let srcEntry;
+			let srcEntry: string;
 			srcEntry = `${PUBLIC_FRONTEND_BASE_URL}/renderimg${basePath}/${scales[s].download} ${scales[s].width}w`;
 			srcSet = srcSet + srcEntry;
-			// no download needed for objectItem ;) ^^
 		}
 		return srcSet;
 	}
 
-	let imageConfig = {};
+	let imageConfig: ImageConfig = {};
 	let basePath = '';
 	if (catalogItem) {
 		imageConfig = getImageConfigFromCatalogItem(catalogItem, fieldName);
-		basePath = catalogItem['href'];
+		basePath = catalogItem['href'] || '';
 	} else if (objectItem) {
 		imageConfig = getImageConfigFromObjectItem(objectItem, fieldName);
-		basePath = objectItem['href'];
+		basePath = objectItem['href'] || '';
 	}
 
-	const scales = imageConfig.hasOwnProperty('scales') ? imageConfig.scales : {};
+	const scales: Record<string, Scale> = imageConfig.hasOwnProperty('scales') && imageConfig.scales ? imageConfig.scales : {};
 
 	const scale = scales.hasOwnProperty(defaultScale) ? scales[defaultScale] : scales['preview'];
 	const srcset = generateSrcSet(imageConfig, basePath);

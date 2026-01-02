@@ -129,6 +129,11 @@ describe('ImageGalleryVariation', () => {
 		// The slides should have images with src attributes containing image paths
 		const images = container.querySelectorAll('.gallery-slide img');
 		expect(images).toHaveLength(3);
+
+		// Verify image paths don't include /Plone prefix (should be stripped)
+		const imgSrc = images[0].getAttribute('src');
+		expect(imgSrc).not.toContain('/Plone');
+		expect(imgSrc).toMatch(/^\/images\/image-1\/@@images\//);
 	});
 
 	test('renders gallery with navigation controls', () => {

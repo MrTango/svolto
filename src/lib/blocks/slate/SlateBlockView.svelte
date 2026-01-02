@@ -7,6 +7,6 @@
 
 <div class="block slate">
 	{#each editor.children as node}
-		<Leaf {node} parent={null} />
+		<Leaf {node} parent={null} blockId={id} />
 	{/each}
 </div>
