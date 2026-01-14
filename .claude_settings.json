@@ -1,0 +1,39 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read(./**)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "Read(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Write(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Edit(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Glob(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Grep(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Read(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/.auto-claude/specs/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Write(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/.auto-claude/specs/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Edit(/home/maik/develop/svelteplayground/svolto/.auto-claude/worktrees/tasks/001-existing-navigation-mega-menu-should-support-all-p/.auto-claude/specs/001-existing-navigation-mega-menu-should-support-all-p/**)",
+      "Read(/home/maik/develop/svelteplayground/svolto/.auto-claude/**)",
+      "Write(/home/maik/develop/svelteplayground/svolto/.auto-claude/**)",
+      "Edit(/home/maik/develop/svelteplayground/svolto/.auto-claude/**)",
+      "Glob(/home/maik/develop/svelteplayground/svolto/.auto-claude/**)",
+      "Grep(/home/maik/develop/svelteplayground/svolto/.auto-claude/**)",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__context7__resolve-library-id(*)",
+      "mcp__context7__get-library-docs(*)",
+      "mcp__graphiti-memory__search_nodes(*)",
+      "mcp__graphiti-memory__search_facts(*)",
+      "mcp__graphiti-memory__add_episode(*)",
+      "mcp__graphiti-memory__get_episodes(*)",
+      "mcp__graphiti-memory__get_entity_edge(*)"
+    ]
+  }
+}

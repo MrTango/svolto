@@ -72,7 +72,7 @@ export async function load(event) {
 	const { getContent } = serverClient;
 	console.log('[SERVER] Got getContent function');
 
-	// Fetch content, navigation, and site settings in parallel
+	// Fetch content and site settings in parallel first, then navigation with language path
 	let data;
 	/** @type {import('$lib/plone/navigation/types').NavigationData} */
 	let navigation = { items: [] };
@@ -85,18 +85,31 @@ export async function load(event) {
 	};
 
 	try {
-		console.log('[SERVER] Calling getContent, fetchNavigation, and fetchSiteSettings...');
-		const [contentResult, navResult, siteResult] = await Promise.all([
+		console.log('[SERVER] Calling getContent and fetchSiteSettings...');
+		const [contentResult, siteResult] = await Promise.all([
 			getContent({ path: currentPath, expand: ['translations'] }),
-			fetchNavigation(DEFAULT_NAV_DEPTH, API_PATH),
 			fetchSiteSettings(API_PATH)
 		]);
 		data = contentResult;
-		navigation = navResult;
 		siteSettings = siteResult;
 		console.log('[SERVER] getContent returned, title:', data?.title);
+		console.log(
+			'[SERVER] Site settings loaded, available languages:',
+			siteSettings.availableLanguages
+		);
+
+		// Determine language from path to fetch language-specific navigation
+		const pathLangForNav = extractLanguageFromPath(
+			'/' + currentPath,
+			siteSettings.availableLanguages
+		);
+		console.log('[SERVER] Fetching navigation for language path:', pathLangForNav || '(root)');
+		navigation = await fetchNavigation(
+			DEFAULT_NAV_DEPTH,
+			API_PATH,
+			pathLangForNav ? `/${pathLangForNav}` : undefined
+		);
 		console.log('[SERVER] Navigation items count:', navigation.items.length);
-		console.log('[SERVER] Site settings loaded, available languages:', siteSettings.availableLanguages);
 	} catch (error) {
 		console.error('[SERVER] Error fetching content from Plone:', error);
 		// Return minimal fallback data
@@ -136,7 +149,15 @@ export async function load(event) {
 
 	// Use path-based language if available, otherwise fall back to detected
 	const currentLang = pathLang || detectedLang;
-	console.log('[SERVER] Current language:', currentLang, '(from path:', pathLang, ', detected:', detectedLang, ')');
+	console.log(
+		'[SERVER] Current language:',
+		currentLang,
+		'(from path:',
+		pathLang,
+		', detected:',
+		detectedLang,
+		')'
+	);
 
 	// Pre-fetch listing block data
 	/** @type {Record<string, import('$lib/blocks/listing/types').ListingResponse>} */
