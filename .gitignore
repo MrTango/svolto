@@ -28,3 +28,6 @@ vite.config.ts.timestamp-*
 /volto-svolto/
 /.pnpm-store/
 /.vscode/settings.json
+
+# Auto Claude data directory
+.auto-claude/
