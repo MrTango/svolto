@@ -1,6 +1,53 @@
-<script lang="ts">
-	import { PUBLIC_FRONTEND_BASE_URL } from '$env/static/public';
+<!--
+@deprecated This component is deprecated. Use ResponsiveImage instead.
 
+Migration Guide:
+================
+Replace Picture.svelte with ResponsiveImage from '$lib/components/ResponsiveImage.svelte'.
+
+Props mapping:
+- catalogItem/objectItem -> Extract scales from image_scales and pass to `scales` prop
+- catalogItem.href -> `baseUrl` prop
+- fieldName -> Use to extract the correct field from image_scales
+- defaultScale -> Not needed, ResponsiveImage uses all available scales
+
+Example migration:
+==================
+
+Before (Picture.svelte):
+```svelte
+<Picture catalogItem={item} fieldName="image" />
+```
+
+After (ResponsiveImage):
+```svelte
+<script>
+import ResponsiveImage from '$lib/components/ResponsiveImage.svelte';
+
+// Extract image data from catalog item
+const imageData = item.image_scales?.image?.[0];
+const scales = imageData?.scales;
+const baseUrl = item.href || '';
+const src = imageData?.download ? `${baseUrl}/${imageData.download}` : '';
+</script>
+
+<ResponsiveImage
+  {scales}
+  {baseUrl}
+  {src}
+  alt=""
+  width={imageData?.width}
+  height={imageData?.height}
+/>
+```
+
+ResponsiveImage benefits:
+- No /renderimg route dependency (uses direct URLs)
+- Supports fetchpriority prop for LCP optimization
+- CSS aspect-ratio placeholder for CLS prevention
+- Supports onload handler for fade-in transitions
+-->
+<script lang="ts">
 	interface Scale {
 		download: string;
 		width: number;
@@ -55,7 +102,8 @@
 				srcSet = srcSet + ',';
 			}
 			let srcEntry: string;
-			srcEntry = `${PUBLIC_FRONTEND_BASE_URL}/renderimg${basePath}/${scales[s].download} ${scales[s].width}w`;
+			// Use direct paths instead of /renderimg route
+			srcEntry = `${basePath}/${scales[s].download} ${scales[s].width}w`;
 			srcSet = srcSet + srcEntry;
 		}
 		return srcSet;
@@ -84,7 +132,7 @@
 			alt=""
 			class=""
 			loading="lazy"
-			src="{PUBLIC_FRONTEND_BASE_URL}/renderimg{basePath}/{scale.download}"
+			src="{basePath}/{scale.download}"
 			width={scale.width}
 			height={scale.height}
 		/>

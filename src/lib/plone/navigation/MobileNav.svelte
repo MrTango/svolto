@@ -20,6 +20,11 @@
 		}
 	}
 
+	function closeMenu() {
+		isOpen = false;
+		expandedItems = new Set();
+	}
+
 	function handleToggle(href: string) {
 		const newExpanded = new Set(expandedItems);
 		if (newExpanded.has(href)) {
@@ -47,7 +52,7 @@
 		<div class="nav-mobile__overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
 			<div class="nav-mobile__content">
 				<!-- Home link at top -->
-				<a href="/" class="nav-mobile__home">
+				<a href="/" class="nav-mobile__home" onclick={closeMenu}>
 					Startseite
 				</a>
 				<div class="nav-mobile__home-separator"></div>
@@ -58,6 +63,7 @@
 					level={1}
 					{expandedItems}
 					onToggle={handleToggle}
+					onClose={closeMenu}
 				/>
 			</div>
 		</div>

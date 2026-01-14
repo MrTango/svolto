@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { ListingItem, LinkHrefItem, ImageScale } from '../types';
+	import ResponsiveImage from '$lib/components/ResponsiveImage.svelte';
+	import { fullWidth } from '$lib/utils/image-sizes';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import type { EmblaCarouselType } from 'embla-carousel';
 
@@ -203,12 +205,16 @@
 				<div class="gallery-container">
 					{#each imageItems as item, index (item['@id'])}
 						<div class="gallery-slide" class:is-selected={index === selectedIndex}>
-							<img
-								src={getImageSrc(item)}
+							<ResponsiveImage
+								scales={getImageScales(item)}
+								baseUrl={getImageBaseUrl(item)}
 								alt={getImageAlt(item)}
+								src={getImageSrc(item)}
 								width={getImageWidth(item)}
 								height={getImageHeight(item)}
+								sizes={fullWidth()}
 								loading={index === 0 ? 'eager' : 'lazy'}
+								fetchpriority={index === 0 ? 'high' : 'auto'}
 								class="gallery-image"
 							/>
 							{#if item.title || item.description}
@@ -278,7 +284,7 @@
 			</div>
 		</div>
 
-		<!-- Thumbnail navigation -->
+		<!-- Thumbnail navigation (Task 4.4: Keep as simple img tags) -->
 		<div class="gallery-thumbnails">
 			{#each imageItems as item, index (item['@id'])}
 				<button
@@ -388,7 +394,16 @@
 		justify-content: center;
 	}
 
-	.gallery-image {
+	/* ResponsiveImage container styling for gallery context */
+	.gallery-slide :global(.responsive-image-container) {
+		max-width: 100%;
+		max-height: 100%;
+		width: auto;
+		height: auto;
+		background-color: transparent;
+	}
+
+	.gallery-slide :global(.gallery-image) {
 		max-width: 100%;
 		max-height: 100%;
 		width: auto;

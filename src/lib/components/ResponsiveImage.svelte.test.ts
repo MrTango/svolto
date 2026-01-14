@@ -1,6 +1,6 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render } from '@testing-library/svelte';
+import { render, fireEvent } from '@testing-library/svelte';
 import ResponsiveImage from './ResponsiveImage.svelte';
 
 describe('ResponsiveImage - Srcset Generation', () => {
@@ -264,5 +264,148 @@ describe('ResponsiveImage - Empty/Missing Scales Handling', () => {
 		// Component should still render without errors
 		const picture = container.querySelector('picture');
 		expect(picture).toBeInTheDocument();
+	});
+});
+
+// Task 2.1: New tests for ResponsiveImage enhancements
+describe('ResponsiveImage - Fetchpriority Prop', () => {
+	test('renders fetchpriority attribute with correct value', () => {
+		const scales = {
+			large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+		};
+
+		const { container } = render(ResponsiveImage, {
+			props: {
+				scales,
+				baseUrl: '/Plone/my-page',
+				alt: 'Hero image',
+				fetchpriority: 'high'
+			}
+		});
+
+		const img = container.querySelector('picture img');
+		expect(img).toHaveAttribute('fetchpriority', 'high');
+	});
+
+	test('uses default fetchpriority="auto" when not specified', () => {
+		const scales = {
+			large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+		};
+
+		const { container } = render(ResponsiveImage, {
+			props: {
+				scales,
+				baseUrl: '/Plone/my-page',
+				alt: 'Test image'
+			}
+		});
+
+		const img = container.querySelector('picture img');
+		expect(img).toHaveAttribute('fetchpriority', 'auto');
+	});
+});
+
+describe('ResponsiveImage - Decoding Prop', () => {
+	test('renders decoding attribute with correct value', () => {
+		const scales = {
+			large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+		};
+
+		const { container } = render(ResponsiveImage, {
+			props: {
+				scales,
+				baseUrl: '/Plone/my-page',
+				alt: 'Test image',
+				decoding: 'sync'
+			}
+		});
+
+		const img = container.querySelector('picture img');
+		expect(img).toHaveAttribute('decoding', 'sync');
+	});
+
+	test('uses default decoding="async" when not specified', () => {
+		const scales = {
+			large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+		};
+
+		const { container } = render(ResponsiveImage, {
+			props: {
+				scales,
+				baseUrl: '/Plone/my-page',
+				alt: 'Test image'
+			}
+		});
+
+		const img = container.querySelector('picture img');
+		expect(img).toHaveAttribute('decoding', 'async');
+	});
+});
+
+describe('ResponsiveImage - CSS Custom Properties for Placeholder', () => {
+	test('applies --aspect-ratio CSS custom property to container', () => {
+		const scales = {
+			large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+		};
+
+		const { container } = render(ResponsiveImage, {
+			props: {
+				scales,
+				baseUrl: '/Plone/my-page',
+				alt: 'Test image',
+				width: 800,
+				height: 600
+			}
+		});
+
+		const wrapper = container.querySelector('.responsive-image-container');
+		expect(wrapper).toBeInTheDocument();
+		expect(wrapper).toHaveStyle('--aspect-ratio: 800 / 600');
+	});
+
+	test('applies --image-placeholder-bg CSS variable to container', () => {
+		const scales = {
+			large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+		};
+
+		const { container } = render(ResponsiveImage, {
+			props: {
+				scales,
+				baseUrl: '/Plone/my-page',
+				alt: 'Test image',
+				width: 800,
+				height: 600
+			}
+		});
+
+		const wrapper = container.querySelector('.responsive-image-container');
+		expect(wrapper).toBeInTheDocument();
+		expect(wrapper).toHaveStyle('--image-placeholder-bg: #e5e5e5');
+	});
+});
+
+describe('ResponsiveImage - Onload Handler', () => {
+	test('triggers onload callback when image loads', async () => {
+		const scales = {
+			large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+		};
+		const onloadHandler = vi.fn();
+
+		const { container } = render(ResponsiveImage, {
+			props: {
+				scales,
+				baseUrl: '/Plone/my-page',
+				alt: 'Test image',
+				onload: onloadHandler
+			}
+		});
+
+		const img = container.querySelector('picture img');
+		expect(img).toBeInTheDocument();
+
+		// Simulate image load event
+		await fireEvent.load(img!);
+
+		expect(onloadHandler).toHaveBeenCalledTimes(1);
 	});
 });

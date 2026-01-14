@@ -1,10 +1,11 @@
 <script lang="ts">
-	import DefaultBlockView from '$lib/blocks/DefaultBlockView.svelte';
+	import RenderBlock from '$lib/RenderBlock.svelte';
 	import type { ListingResponse } from '$lib/blocks/listing/types';
+	import type { BlockConfig } from '$lib/blocks/index';
 
 	let {
 		content,
-		blocksConfig = {},
+		blocksConfig = {} as Record<string, BlockConfig>,
 		pathname,
 		metadata = undefined,
 		listingData = {} as Record<string, ListingResponse>,
@@ -17,26 +18,19 @@
 	{#each content.blocks_layout.items as block}
 		{@const blockData = content.blocks?.[block]}
 		{@const blockType = blockData?.['@type']}
-		{@const BlockComponent = blocksConfig[blockType]?.view || DefaultBlockView}
-		<!-- {@debug blockData} -->
-		<div class="VoltoBlock">
-			{#if BlockComponent === DefaultBlockView}
-				<p>block: {block} [{blockType}]</p>
-			{/if}
-			<BlockComponent
-				key={block}
-				id={block}
-				data={blockData}
-				{metadata}
-				properties={content}
-				path={pathname}
-				{blocksConfig}
-				initialListingData={listingData[block]}
-				page={listingPages[block] ?? 1}
-				{listingData}
-				{listingPages}
-				{paginatedBlockCount}
-			/>
-		</div>
+		{@const blockConfig = blocksConfig[blockType]}
+		<RenderBlock
+			{block}
+			{blockData}
+			{blockType}
+			{blockConfig}
+			{content}
+			{pathname}
+			{metadata}
+			{listingData}
+			{listingPages}
+			{paginatedBlockCount}
+			{blocksConfig}
+		/>
 	{/each}
 {/if}

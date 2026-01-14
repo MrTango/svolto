@@ -7,6 +7,13 @@ import {
 	parsePageFromUrlForBlock
 } from '$lib/blocks/listing/api';
 import { fetchNavigation, DEFAULT_NAV_DEPTH } from '$lib/plone/navigation/api';
+import {
+	fetchSiteSettings,
+	detectLanguageFromHeaders,
+	extractTranslations,
+	extractLanguageFromPath
+} from '$lib/plone/site';
+import { getLanguageCookie } from '$lib/utils/language-cookie';
 
 export const prerender = false;
 export const trailingSlash = 'always';
@@ -65,21 +72,31 @@ export async function load(event) {
 	const { getContent } = serverClient;
 	console.log('[SERVER] Got getContent function');
 
-	// Fetch content and navigation in parallel
+	// Fetch content, navigation, and site settings in parallel
 	let data;
 	/** @type {import('$lib/plone/navigation/types').NavigationData} */
 	let navigation = { items: [] };
+	/** @type {import('$lib/plone/site').SiteSettings} */
+	let siteSettings = {
+		availableLanguages: ['en'],
+		defaultLanguage: 'en',
+		useCookieNegotiation: false,
+		useRequestNegotiation: false
+	};
 
 	try {
-		console.log('[SERVER] Calling getContent and fetchNavigation...');
-		const [contentResult, navResult] = await Promise.all([
-			getContent({ path: currentPath }),
-			fetchNavigation(DEFAULT_NAV_DEPTH, API_PATH)
+		console.log('[SERVER] Calling getContent, fetchNavigation, and fetchSiteSettings...');
+		const [contentResult, navResult, siteResult] = await Promise.all([
+			getContent({ path: currentPath, expand: ['translations'] }),
+			fetchNavigation(DEFAULT_NAV_DEPTH, API_PATH),
+			fetchSiteSettings(API_PATH)
 		]);
 		data = contentResult;
 		navigation = navResult;
+		siteSettings = siteResult;
 		console.log('[SERVER] getContent returned, title:', data?.title);
 		console.log('[SERVER] Navigation items count:', navigation.items.length);
+		console.log('[SERVER] Site settings loaded, available languages:', siteSettings.availableLanguages);
 	} catch (error) {
 		console.error('[SERVER] Error fetching content from Plone:', error);
 		// Return minimal fallback data
@@ -91,9 +108,35 @@ export async function load(event) {
 			listingData: {},
 			listingPages: {},
 			paginatedBlockCount: 0,
-			navigation
+			navigation,
+			siteSettings,
+			currentLang: siteSettings.defaultLanguage,
+			translations: []
 		};
 	}
+
+	// Extract translations from content data
+	/** @type {Array<{language: string, '@id': string}>} */
+	const translations = extractTranslations(data);
+
+	// Determine current language from URL path (for UI display)
+	// This shows which language version the user is currently viewing
+	const pathLang = extractLanguageFromPath('/' + currentPath, siteSettings.availableLanguages);
+
+	// Fall back to cookie/header detection if path doesn't contain a language
+	const cookieLang = getLanguageCookie(event.cookies);
+	const acceptLanguageHeader = event.request.headers.get('Accept-Language');
+	const detectedLang = detectLanguageFromHeaders(
+		cookieLang,
+		acceptLanguageHeader,
+		siteSettings.availableLanguages,
+		siteSettings.useRequestNegotiation,
+		siteSettings.defaultLanguage
+	);
+
+	// Use path-based language if available, otherwise fall back to detected
+	const currentLang = pathLang || detectedLang;
+	console.log('[SERVER] Current language:', currentLang, '(from path:', pathLang, ', detected:', detectedLang, ')');
 
 	// Pre-fetch listing block data
 	/** @type {Record<string, import('$lib/blocks/listing/types').ListingResponse>} */
@@ -143,5 +186,14 @@ export async function load(event) {
 	}
 
 	console.log('[SERVER] Returning data');
-	return { ...data, listingData, listingPages, paginatedBlockCount, navigation };
+	return {
+		...data,
+		listingData,
+		listingPages,
+		paginatedBlockCount,
+		navigation,
+		siteSettings,
+		currentLang,
+		translations
+	};
 }

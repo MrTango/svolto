@@ -127,7 +127,7 @@ describe('ImageGalleryVariation', () => {
 
 		// Check that only Image items are rendered
 		// The slides should have images with src attributes containing image paths
-		const images = container.querySelectorAll('.gallery-slide img');
+		const images = container.querySelectorAll('.gallery-slide picture img');
 		expect(images).toHaveLength(3);
 
 		// Verify image paths don't include /Plone prefix (should be stripped)
@@ -173,5 +173,128 @@ describe('ImageGalleryVariation', () => {
 		expect(prevButton).not.toBeInTheDocument();
 		expect(nextButton).not.toBeInTheDocument();
 		expect(thumbnails).toHaveLength(0);
+	});
+});
+
+/**
+ * Task 4.1: Component Migration Tests for ResponsiveImage
+ *
+ * These tests verify the migration of ImageGalleryVariation to use ResponsiveImage:
+ * 1. First carousel image has fetchpriority="high"
+ * 2. Subsequent carousel images have loading="lazy"
+ * 3. Thumbnails remain as simple img tags
+ */
+describe('ImageGalleryVariation - ResponsiveImage Migration', () => {
+	const mockImageItems: ListingItem[] = [
+		{
+			'@id': 'http://localhost:8080/Plone/images/image-1',
+			'@type': 'Image',
+			title: 'First Image',
+			description: 'First image description',
+			image_field: 'image',
+			image_scales: {
+				image: [
+					{
+						download: '@@images/image.jpeg',
+						width: 1200,
+						height: 800,
+						alt: 'First image alt',
+						scales: {
+							preview: { download: '@@images/image-400.jpeg', width: 400, height: 267 },
+							large: { download: '@@images/image-800.jpeg', width: 800, height: 533 },
+							thumb: { download: '@@images/image-128.jpeg', width: 128, height: 85 }
+						}
+					}
+				]
+			}
+		},
+		{
+			'@id': 'http://localhost:8080/Plone/images/image-2',
+			'@type': 'Image',
+			title: 'Second Image',
+			description: 'Second image description',
+			image_field: 'image',
+			image_scales: {
+				image: [
+					{
+						download: '@@images/image.jpeg',
+						width: 1000,
+						height: 750,
+						alt: 'Second image alt',
+						scales: {
+							preview: { download: '@@images/image-400.jpeg', width: 400, height: 300 },
+							large: { download: '@@images/image-800.jpeg', width: 800, height: 600 },
+							thumb: { download: '@@images/image-128.jpeg', width: 128, height: 96 }
+						}
+					}
+				]
+			}
+		},
+		{
+			'@id': 'http://localhost:8080/Plone/images/image-3',
+			'@type': 'Image',
+			title: 'Third Image',
+			image_field: 'image',
+			image_scales: {
+				image: [
+					{
+						download: '@@images/image.jpeg',
+						width: 900,
+						height: 600,
+						scales: {
+							preview: { download: '@@images/image-400.jpeg', width: 400, height: 267 },
+							large: { download: '@@images/image-800.jpeg', width: 800, height: 533 }
+						}
+					}
+				]
+			}
+		}
+	];
+
+	test('first carousel image has fetchpriority="high"', () => {
+		const { container } = render(ImageGalleryVariation, {
+			props: { items: mockImageItems }
+		});
+
+		// Get all gallery slides
+		const slides = container.querySelectorAll('.gallery-slide');
+		expect(slides.length).toBeGreaterThan(0);
+
+		// First slide should have an image with fetchpriority="high"
+		const firstSlide = slides[0];
+		const firstImg = firstSlide.querySelector('picture img');
+		expect(firstImg).toHaveAttribute('fetchpriority', 'high');
+	});
+
+	test('subsequent carousel images have loading="lazy"', () => {
+		const { container } = render(ImageGalleryVariation, {
+			props: { items: mockImageItems }
+		});
+
+		const slides = container.querySelectorAll('.gallery-slide');
+		expect(slides.length).toBeGreaterThanOrEqual(2);
+
+		// Second and subsequent slides should have loading="lazy"
+		for (let i = 1; i < slides.length; i++) {
+			const img = slides[i].querySelector('picture img');
+			expect(img).toHaveAttribute('loading', 'lazy');
+		}
+	});
+
+	test('thumbnails remain as simple img tags with loading="lazy"', () => {
+		const { container } = render(ImageGalleryVariation, {
+			props: { items: mockImageItems }
+		});
+
+		// Thumbnails should be simple img tags, not wrapped in responsive-image-container
+		const thumbnails = container.querySelectorAll('.gallery-thumbnail .thumbnail-image');
+		expect(thumbnails.length).toBeGreaterThan(0);
+
+		thumbnails.forEach((thumb) => {
+			expect(thumb).toHaveAttribute('loading', 'lazy');
+			// Thumbnail should NOT be inside a responsive-image-container (it's a simple img)
+			const parent = thumb.closest('.responsive-image-container');
+			expect(parent).toBeNull();
+		});
 	});
 });

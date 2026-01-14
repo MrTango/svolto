@@ -6,9 +6,10 @@
 		level: number;
 		isExpanded: boolean;
 		onToggle: (href: string) => void;
+		onClose?: () => void;
 	}
 
-	let { item, level, isExpanded, onToggle }: Props = $props();
+	let { item, level, isExpanded, onToggle, onClose }: Props = $props();
 
 	const hasChildren = $derived(item.items && item.items.length > 0);
 
@@ -16,6 +17,8 @@
 		if (hasChildren) {
 			event.preventDefault();
 			onToggle(item.href);
+		} else {
+			onClose?.();
 		}
 	}
 
@@ -55,7 +58,7 @@
 		</span>
 	</button>
 {:else}
-	<a href={item.href} class="nav-mobile__item nav-mobile__item--level-{level}" data-nav-item={item.href}>
+	<a href={item.href} class="nav-mobile__item nav-mobile__item--level-{level}" data-nav-item={item.href} onclick={handleClick}>
 		<span class="nav-mobile__item-title">{item.title}</span>
 	</a>
 {/if}

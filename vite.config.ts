@@ -2,9 +2,20 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { defineConfig } from 'vite';
+import { analyzer } from 'vite-bundle-analyzer';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit()],
+	plugins: [
+		tailwindcss(),
+		sveltekit(),
+		process.env.ANALYZE === 'true' &&
+			analyzer({
+				analyzerMode: 'static',
+				fileName: 'bundle-analysis',
+				openAnalyzer: !process.env.CI,
+				defaultSizes: 'stat'
+			})
+	].filter(Boolean),
 	server: {
 		host: '0.0.0.0',
 		proxy: {
@@ -12,8 +23,6 @@ export default defineConfig({
 				target: 'http://backend:8080',
 				changeOrigin: true
 			},
-			// Proxy @@images and @@download requests to Plone backend
-			// These paths have /Plone stripped in frontend URLs but backend needs it
 			'^/.*@@images': {
 				target: 'http://backend:8080',
 				changeOrigin: true,

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import type { Component } from 'svelte';
 	import type { ListingBlockData, ListingItem, ListingResponse } from './types';
-	import { getVariationComponent } from './variations/index';
+	import { getVariationComponent, DefaultVariation } from './variations/index';
 	import {
 		fetchListingData,
 		calculateBStart,
@@ -29,7 +30,6 @@
 		path?: string;
 		page?: number;
 		initialListingData?: ListingResponse;
-		/** Number of paginated blocks on the page (determines pagination key format) */
 		paginatedBlockCount?: number;
 	} = $props();
 
@@ -67,8 +67,27 @@
 	// Get the variation name (default to 'default')
 	const variationName = $derived(data?.variation || 'default');
 
-	// Get the appropriate variation component
-	const VariationComponent = $derived(getVariationComponent(variationName));
+	// Load the variation component asynchronously
+	// This enables code splitting for heavy variations like ImageGalleryVariation
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	let VariationComponent: Component<any> | null = $state(null);
+	let variationError: Error | null = $state(null);
+
+	// Load variation component when variation name changes
+	$effect(() => {
+		const currentVariation = variationName;
+
+		getVariationComponent(currentVariation)
+			.then((component) => {
+				VariationComponent = component;
+				variationError = null;
+			})
+			.catch((error) => {
+				console.error(`Failed to load variation "${currentVariation}":`, error);
+				variationError = error;
+				VariationComponent = DefaultVariation;
+			});
+	});
 
 	// Check if results are empty (after loading)
 	const isEmpty = $derived(!isLoading && displayItems.length === 0);
@@ -142,7 +161,7 @@
 		<div class="listing-empty">
 			<p class="empty-message">No results found.</p>
 		</div>
-	{:else}
+	{:else if VariationComponent}
 		<VariationComponent items={displayItems} linkTitle={data?.linkTitle} linkHref={data?.linkHref} />
 
 		{#if showPagination}
@@ -154,6 +173,12 @@
 				{paginatedBlockCount}
 			/>
 		{/if}
+	{:else}
+		<!-- Variation component still loading -->
+		<div class="listing-loading">
+			<div class="loading-spinner"></div>
+			<span class="loading-text">Loading...</span>
+		</div>
 	{/if}
 </div>
 

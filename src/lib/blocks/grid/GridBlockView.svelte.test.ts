@@ -1,8 +1,8 @@
 import { describe, test, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render } from '@testing-library/svelte';
+import { render, waitFor } from '@testing-library/svelte';
 import GridBlockView from './GridBlockView.svelte';
-import blocks from '$lib/blocks/index';
+import { blocksConfig } from '$lib/blocks/index';
 
 const defaultProps = {
 	metadata: {},
@@ -295,7 +295,7 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 				key: 'test-key',
 				id: 'test-id',
 				data,
-				blocksConfig: blocks,
+				blocksConfig: blocksConfig,
 				path: '/test-path',
 				metadata: { title: 'Test Page' },
 				properties: {}
@@ -315,7 +315,7 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 	test('nested blocksConfig excludes gridBlock to prevent nested grids', () => {
 		// Create a mock blocksConfig that includes gridBlock
 		const mockBlocksConfigWithGrid = {
-			...blocks,
+			...blocksConfig,
 			gridBlock: {
 				id: 'gridBlock',
 				title: 'Grid',
@@ -477,7 +477,7 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 });
 
 describe('GridBlockView - Nested Listing Blocks', () => {
-	test('listing blocks render within grid columns', () => {
+	test('listing blocks render within grid columns', async () => {
 		// Create data with a listing block in a grid column
 		const data = {
 			blocks: {
@@ -500,7 +500,7 @@ describe('GridBlockView - Nested Listing Blocks', () => {
 				key: 'test-key',
 				id: 'test-id',
 				data,
-				blocksConfig: blocks,
+				blocksConfig: blocksConfig,
 				path: '/test-path',
 				metadata: {},
 				properties: {}
@@ -515,13 +515,14 @@ describe('GridBlockView - Nested Listing Blocks', () => {
 		const voltoBlocks = container.querySelectorAll('.VoltoBlock');
 		expect(voltoBlocks).toHaveLength(2);
 
-		// Verify listing block renders (it should show loading state or content)
-		// The listing block is recognized and rendered (not fallback to DefaultBlockView)
-		const listingBlock = container.querySelector('.block.listing');
-		expect(listingBlock).toBeInTheDocument();
+		// Wait for async listing block component to load
+		await waitFor(() => {
+			const listingBlock = container.querySelector('.block.listing');
+			expect(listingBlock).toBeInTheDocument();
+		});
 	});
 
-	test('listing component receives correct props from grid', () => {
+	test('listing component receives correct props from grid', async () => {
 		// Create mock listing data to pass through
 		const listingData = {
 			'listing-1': {
@@ -549,7 +550,7 @@ describe('GridBlockView - Nested Listing Blocks', () => {
 				key: 'test-key',
 				id: 'test-id',
 				data,
-				blocksConfig: blocks,
+				blocksConfig: blocksConfig,
 				path: '/test-path',
 				metadata: {},
 				properties: {},
@@ -563,13 +564,20 @@ describe('GridBlockView - Nested Listing Blocks', () => {
 		const columns = container.querySelectorAll('.grid-column');
 		expect(columns).toHaveLength(1);
 
-		// Verify the listing block is rendered (it receives initialListingData)
-		const listingBlock = container.querySelector('.block.listing');
-		expect(listingBlock).toBeInTheDocument();
+		// Wait for async listing block component to load
+		await waitFor(() => {
+			const listingBlock = container.querySelector('.block.listing');
+			expect(listingBlock).toBeInTheDocument();
+		});
 
-		// Verify the listing is NOT in loading state (since initialListingData was provided)
-		// The listing should render items or empty state, not loading spinner
-		const loadingSpinner = container.querySelector('.listing-loading');
-		expect(loadingSpinner).not.toBeInTheDocument();
+		// Wait for async variation loading to complete
+		// The listing should render the default variation content after loading
+		await waitFor(() => {
+			// After variation loads, either the content or empty state should show
+			// The loading spinner should no longer be in the document
+			const listingDefault = container.querySelector('.listing-default');
+			const listingEmpty = container.querySelector('.listing-empty');
+			expect(listingDefault || listingEmpty).toBeTruthy();
+		});
 	});
 });

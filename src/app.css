@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './lib/plone/navigation/nav-variables.css';
+@import './lib/styles/layout-variables.css';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
@@ -39,6 +40,270 @@
 		border-radius: var(--rounded-lg);
 		padding: var(--spacing-6);
 		box-shadow: var(--shadow-xl);
+	}
+
+	/* ==============================================
+	   Container Utility Classes
+	   Three-tier container width system for layouts
+	   ============================================== */
+
+	/* Layout container - full-width elements like header/footer (1440px) */
+	.container-layout {
+		max-width: var(--layout-container-width);
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		padding-inline: var(--container-padding-mobile);
+	}
+
+	/* Default container - standard content sections (940px) */
+	.container-default {
+		max-width: var(--default-container-width);
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		padding-inline: var(--container-padding-mobile);
+	}
+
+	/* Narrow container - text-focused content like articles (620px) */
+	.container-narrow {
+		max-width: var(--narrow-container-width);
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		padding-inline: var(--container-padding-mobile);
+	}
+
+	/* Responsive padding for containers - tablet (768px+) */
+	@media (min-width: 768px) {
+		.container-layout,
+		.container-default,
+		.container-narrow {
+			padding-inline: var(--container-padding-tablet);
+		}
+	}
+
+	/* Responsive padding for containers - desktop (1024px+) */
+	@media (min-width: 1024px) {
+		.container-layout,
+		.container-default,
+		.container-narrow {
+			padding-inline: var(--container-padding-desktop);
+		}
+	}
+
+	/* ==============================================
+	   Site Wrapper
+	   Root layout container with flex column layout
+	   ============================================== */
+
+	.site-wrapper {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	/* ==============================================
+	   Site Header Component Styles
+	   Modular header with gradient background
+	   ============================================== */
+
+	/* Site header - full viewport width with gradient */
+	.site-header {
+		width: 100%;
+		background: linear-gradient(
+			to right,
+			var(--header-gradient-start),
+			var(--header-gradient-end)
+		);
+		min-height: var(--header-height);
+	}
+
+	/* Header inner container - constrains content to layout width */
+	.site-header .header-inner {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.5rem;
+		padding-block: 0.75rem;
+	}
+
+	/* Header logo region */
+	.site-header .header-logo {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+	}
+
+	.site-header .header-logo .logo-link {
+		color: var(--header-text-color, #ffffff);
+		text-decoration: none;
+		font-weight: var(--font-weight-bold, 700);
+		font-size: var(--text-xl, 1.25rem);
+	}
+
+	.site-header .header-logo .logo-link:hover {
+		opacity: 0.9;
+	}
+
+	/* Header navigation region */
+	.site-header .header-nav {
+		display: flex;
+		align-items: center;
+		flex-grow: 1;
+	}
+
+	/* Override navigation text colors for header context (WCAG AA compliance)
+	   Nav items default to teal text (--nav-panel-bg: #0097a7), which has poor contrast
+	   on teal header background. Scoped Svelte styles require !important to override. */
+	.site-header .nav-mega__item {
+		color: var(--header-text-color, #ffffff) !important;
+	}
+
+	.site-header .nav-mega__item:hover,
+	.site-header .nav-mega__item--active,
+	.site-header .nav-mega__item--open {
+		color: var(--header-text-color, #ffffff) !important;
+		opacity: 0.9;
+	}
+
+	.site-header .nav-mega__item--active::after {
+		background-color: var(--header-text-color, #ffffff) !important;
+	}
+
+	/* Focus ring needs white color on teal background for visibility */
+	.site-header .nav-mega__item:focus-visible {
+		outline-color: var(--header-text-color, #ffffff) !important;
+	}
+
+	/* Language switcher text colors for header context (WCAG AA compliance) */
+	.site-header .lang-link {
+		color: var(--header-text-color, #ffffff) !important;
+	}
+
+	.site-header .lang-link:hover {
+		color: var(--header-text-color, #ffffff) !important;
+		opacity: 0.9;
+	}
+
+	.site-header .lang-link--current {
+		color: var(--header-text-color, #ffffff) !important;
+	}
+
+	.site-header .lang-link:focus-visible {
+		outline-color: var(--header-text-color, #ffffff) !important;
+	}
+
+	.site-header .lang-link--separator::after {
+		color: var(--header-text-color, #ffffff) !important;
+		opacity: 0.7;
+	}
+
+	/* Header utility region */
+	.site-header .header-utility {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		gap: 0.5rem;
+	}
+
+	/* Desktop header layout (1024px+) */
+	@media (min-width: 1024px) {
+		.site-header .header-inner {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1.5rem;
+		}
+
+		.site-header .header-nav {
+			justify-content: center;
+		}
+	}
+
+	/* ==============================================
+	   Breadcrumbs Wrapper
+	   Container for breadcrumbs between header and main
+	   ============================================== */
+
+	.breadcrumbs-wrapper {
+		padding-block: 0.75rem;
+		background-color: var(--color-gray-50, #f9fafb);
+		border-bottom: 1px solid var(--color-gray-200, #e5e7eb);
+	}
+
+	.breadcrumbs-wrapper .breadcrumbs {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: var(--text-sm, 0.875rem);
+	}
+
+	.breadcrumbs-wrapper .breadcrumbs li {
+		display: flex;
+		align-items: center;
+	}
+
+	.breadcrumbs-wrapper .breadcrumbs li:not(:last-child)::after {
+		content: '/';
+		margin-left: 0.5rem;
+		color: var(--color-gray-400, #9ca3af);
+	}
+
+	.breadcrumbs-wrapper .breadcrumbs a {
+		color: var(--color-gray-600, #4b5563);
+		text-decoration: none;
+	}
+
+	.breadcrumbs-wrapper .breadcrumbs a:hover {
+		text-decoration: underline;
+	}
+
+	.breadcrumbs-wrapper .breadcrumbs li:last-child a {
+		color: var(--color-gray-900, #111827);
+		font-weight: var(--font-weight-medium, 500);
+	}
+
+	/* ==============================================
+	   Main Content Area
+	   Primary content container with proper spacing
+	   ============================================== */
+
+	.main-content {
+		flex: 1;
+		padding-block: var(--section-spacing);
+	}
+
+	/* ==============================================
+	   Site Footer Component
+	   Full viewport width with gradient background
+	   ============================================== */
+
+	/* Base footer styling - spans full viewport width */
+	.site-footer {
+		width: 100%;
+		background: linear-gradient(
+			to right,
+			var(--footer-gradient-start),
+			var(--footer-gradient-end)
+		);
+		padding: var(--footer-padding);
+		color: var(--footer-text-color, #ffffff);
+		margin-top: auto;
+	}
+
+	/* Footer links styling - override default blue links */
+	.site-footer a {
+		color: var(--footer-text-color, #ffffff);
+		text-decoration: underline;
+	}
+
+	.site-footer a:hover {
+		opacity: 0.9;
 	}
 
 	/* Slate Block Custom Properties */

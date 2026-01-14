@@ -2,9 +2,13 @@
 
 ## Overview
 
-Total Tasks: 32
+Total Tasks: 38
 
 This implementation covers a multi-level navigation component displaying the top 3 levels of site hierarchy as a mega menu on desktop and accordion drill-down on mobile, with full WCAG-compliant keyboard accessibility.
+
+**Spec Update (2026-01-02):** Added Two-Click Navigation Pattern for Level 1 items with children - the panel headline must be a clickable link to navigate to the Level 1 page.
+
+**Spec Update (2026-01-02 #2):** Clicking any navigation link inside the mega menu panel or mobile overlay should close the menu.
 
 ## Task List
 
@@ -345,6 +349,77 @@ This implementation covers a multi-level navigation component displaying the top
 - No more than 5 additional tests added when filling gaps
 - Testing focused exclusively on mega menu feature requirements
 
+---
+
+### Spec Update Tasks
+
+#### Task Group 8: Two-Click Navigation Pattern (Spec Update 2026-01-02)
+
+**Dependencies:** Task Groups 2, 4
+
+- [x] 8.0 Implement Two-Click Navigation Pattern for Level 1 items with children
+  - [x] 8.1 Update MegaNavPanel headline to be a clickable link
+    - Change `<h2>` panel title from plain text to `<a>` anchor element
+    - Link href should point to the Level 1 item's URL (item.href)
+    - Maintain visual styling as headline (font-size, font-weight)
+    - Keep semantic heading role via aria-level or heading structure
+  - [x] 8.2 Ensure headline link receives focus first when panel opens
+    - Update focus trap to set initial focus on headline link
+    - Keyboard users can immediately press Enter to navigate to Level 1 page
+    - Tab from headline should move to first Level 2/3 item, then close button
+  - [x] 8.3 Write test for Two-Click Navigation Pattern
+    - Test click on Level 1 item opens panel (does not navigate)
+    - Test headline link in panel is clickable and navigates to Level 1 URL
+    - Test focus moves to headline link when panel opens
+  - [x] 8.4 Update mobile accordion to support similar pattern
+    - When Level 1 item is expanded, show item title as link at top of children
+    - Allow users to navigate to Level 1 page from within expanded accordion
+    - Maintain accordion expand/collapse for chevron tap
+
+**Acceptance Criteria:**
+
+- Panel headline is a clickable link that navigates to Level 1 page
+- First click opens mega menu, second click (on headline) navigates
+- Keyboard focus moves to headline link when panel opens
+- Mobile accordion provides path to Level 1 page when expanded
+- Tests verify the two-click navigation pattern works correctly
+
+---
+
+#### Task Group 9: Close Menu on Navigation Link Click (Spec Update 2026-01-02 #2)
+
+**Dependencies:** Task Groups 2, 3, 8
+
+- [x] 9.0 Implement close-on-navigation behavior for all menu links
+  - [x] 9.1 Desktop: Close mega menu panel when any link is clicked
+    - Add click handler to Level 1 headline link in MegaNavPanel to close panel
+    - Add click handler to Level 2 header links in MegaNavColumn to close panel
+    - Add click handler to Level 3 item links in MegaNavColumn to close panel
+    - Use onClose callback prop passed from parent MegaNav component
+  - [x] 9.2 Mobile: Close mobile overlay when any link is clicked
+    - Add click handler to home link to close overlay
+    - Add click handler to parent links (from Task 8.4) to close overlay
+    - Add click handler to all navigation item links to close overlay
+    - Pass onClose callback through MobileNavList and MobileNavItem components
+  - [x] 9.3 Write tests for close-on-navigation behavior
+    - Test: clicking Level 1 headline link closes desktop panel
+    - Test: clicking Level 2 header link closes desktop panel
+    - Test: clicking Level 3 item link closes desktop panel
+    - Test: clicking any link in mobile overlay closes the overlay
+  - [x] 9.4 Ensure navigation still works correctly after menu closes
+    - Verify SvelteKit navigation occurs after menu close
+    - No race conditions between close animation and navigation
+    - Page content updates correctly after navigation
+
+**Acceptance Criteria:**
+
+- All links inside desktop mega menu panel close the panel when clicked
+- All links inside mobile overlay close the overlay when clicked
+- Navigation to target page occurs correctly
+- Tests verify close-on-navigation behavior works for all link types
+
+---
+
 ## Execution Order
 
 Recommended implementation sequence:
@@ -356,6 +431,8 @@ Recommended implementation sequence:
 5. **CSS Architecture** (Task Group 5) - Can parallel with Task Groups 2-4
 6. **Layout Integration** (Task Group 6) - After all components ready
 7. **Test Review** (Task Group 7) - Final validation
+8. **Two-Click Navigation Pattern** (Task Group 8) - Spec update implementation
+9. **Close Menu on Navigation** (Task Group 9) - Spec update implementation
 
 **Parallelization Opportunities:**
 - Task Groups 2 and 3 can be developed in parallel (both depend only on Task Group 1)

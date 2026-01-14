@@ -12,10 +12,25 @@
 	let { item, panelId, onClose, onKeyDown }: Props = $props();
 
 	const headerId = $derived(`${panelId}-header`);
+	const headlineLinkId = $derived(`${panelId}-headline-link`);
 
 	function handleKeyDown(event: KeyboardEvent) {
 		onKeyDown?.(event);
 	}
+
+	function handleLinkClick() {
+		onClose();
+	}
+
+	$effect(() => {
+		// Focus the headline link when panel opens
+		const headlineLink = document.getElementById(headlineLinkId);
+		if (headlineLink) {
+			requestAnimationFrame(() => {
+				headlineLink.focus();
+			});
+		}
+	});
 </script>
 
 <div
@@ -27,7 +42,16 @@
 >
 	<div class="nav-mega__panel-container">
 		<div class="nav-mega__panel-header">
-			<h2 id={headerId} class="nav-mega__panel-title">{item.title}</h2>
+			<h2 id={headerId} class="nav-mega__panel-title">
+				<a
+					id={headlineLinkId}
+					href={item.href}
+					class="nav-mega__panel-title-link"
+					onclick={handleLinkClick}
+				>
+					{item.title}
+				</a>
+			</h2>
 			<button
 				type="button"
 				class="nav-mega__close-btn"
@@ -57,7 +81,7 @@
 				<ul class="nav-mega__columns" role="menu">
 					{#each item.items as level2Item}
 						<li role="none">
-							<MegaNavColumn item={level2Item} />
+							<MegaNavColumn item={level2Item} {onClose} />
 						</li>
 					{/each}
 				</ul>
@@ -99,6 +123,22 @@
 		font-weight: 600;
 		color: var(--nav-panel-text, #ffffff);
 		margin: 0;
+	}
+
+	.nav-mega__panel-title-link {
+		color: inherit;
+		text-decoration: none;
+		display: inline-block;
+	}
+
+	.nav-mega__panel-title-link:hover {
+		text-decoration: underline;
+	}
+
+	.nav-mega__panel-title-link:focus-visible {
+		outline: 2px solid var(--nav-panel-text, #ffffff);
+		outline-offset: 4px;
+		border-radius: 2px;
 	}
 
 	.nav-mega__close-btn {

@@ -17,17 +17,27 @@ Implement a multi-level navigation component displaying the top 3 levels of site
 - Level 1 items without children navigate directly to the target URL
 - Only one mega menu panel can be open at a time
 - Clicking outside the menu or pressing Escape closes the open panel
+- **Clicking any navigation link inside the mega menu panel closes the panel** (navigates and closes)
 - Active/current Level 1 item displays an underline indicator
+
+**Two-Click Navigation Pattern for Level 1 Items with Children**
+
+- First click on a Level 1 nav bar item (that has children) opens the mega menu panel - it does NOT navigate
+- Inside the opened mega menu panel, the Level 1 item title is repeated as a clickable headline at the top-left
+- Second click on this headline (inside the panel) navigates to the Level 1 page itself
+- This pattern ensures users can both explore child content and access the parent section landing page
+- The headline link in the panel serves as the primary navigation path to the Level 1 page
 
 **Desktop Mega Menu Panel Layout**
 
 - Full viewport width with solid brand-colored background
-- Panel header shows the selected Level 1 item title and a close button (X icon)
-- Level 2 items displayed as column headers with underline separator
-- Level 3 items listed vertically below their parent Level 2 header
+- Panel header shows the selected Level 1 item title as a **clickable link** (navigates to Level 1 page) and a close button (X icon)
+- Level 2 items displayed as column headers with underline separator (clickable links)
+- Level 3 items listed vertically below their parent Level 2 header (clickable links)
 - Multi-column grid layout (3-4 columns based on content)
 - Level 2 headers are visually distinct (bold/semibold) from Level 3 links
 - Content flows by columns, not rows
+- **All navigation links (Level 1 headline, Level 2 headers, Level 3 items) close the panel when clicked**
 
 **Mobile Hamburger Menu**
 
@@ -37,11 +47,13 @@ Implement a multi-level navigation component displaying the top 3 levels of site
 - Home link (Startseite) displayed at top with separator
 - Touch-friendly tap targets (minimum 44x44px)
 - Smooth expand/collapse transitions for accordion behavior
+- **Clicking any navigation link closes the mobile menu overlay** (navigates and closes)
 
 **Keyboard Navigation (WCAG Compliance)**
 
 - Tab key moves focus between Level 1 items in the nav bar
 - Enter/Space on Level 1 item opens mega menu or navigates (if no children)
+- When mega menu opens, first focusable element is the Level 1 headline link (allows immediate navigation to Level 1 page)
 - Arrow keys navigate within open mega menu (Left/Right between columns, Up/Down within columns)
 - Escape key closes open mega menu and returns focus to trigger
 - Focus trap within open mega menu panel
@@ -70,7 +82,7 @@ Implement a multi-level navigation component displaying the top 3 levels of site
 - Header bar: logo left, Level 1 items horizontal on right with teal/cyan brand color
 - Active item has dark underline indicator below
 - Mega menu panel: full viewport width, solid teal background (#0097a7 approximate)
-- Panel header: Level 1 title repeated top-left, X close button top-right
+- Panel header: Level 1 title repeated top-left as **clickable link** to navigate to Level 1 page, X close button top-right
 - Level 2 headers: bold white text with subtle underline separator
 - Level 3 items: regular weight white text, no bullets, listed vertically under headers
 - Multi-column grid with generous padding and clear column separation

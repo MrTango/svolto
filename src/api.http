@@ -2,9 +2,13 @@
 
 ###
 
-get {{baseUrl}}/sample-page
+get {{baseUrl}}/de/sample-page
 Authorization: Basic admin:admin
 
+###
+
+get {{baseUrl}}/de/sample-page/@navigation?d=2
+Authorization: Basic admin:admin
 ###
 
 post {{baseUrl}}/@querystring-search

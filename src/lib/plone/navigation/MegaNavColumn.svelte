@@ -3,13 +3,18 @@
 
 	interface Props {
 		item: NavItem;
+		onClose?: () => void;
 	}
 
-	let { item }: Props = $props();
+	let { item, onClose }: Props = $props();
+
+	function handleLinkClick() {
+		onClose?.();
+	}
 </script>
 
 <div class="nav-mega__column">
-	<a href={item.href} class="nav-mega__l2-header" role="menuitem">
+	<a href={item.href} class="nav-mega__l2-header" role="menuitem" onclick={handleLinkClick}>
 		{item.title}
 	</a>
 
@@ -17,7 +22,7 @@
 		<ul class="nav-mega__l3-list">
 			{#each item.items as level3Item}
 				<li>
-					<a href={level3Item.href} class="nav-mega__l3-item" role="menuitem">
+					<a href={level3Item.href} class="nav-mega__l3-item" role="menuitem" onclick={handleLinkClick}>
 						{level3Item.title}
 					</a>
 				</li>

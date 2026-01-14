@@ -1,12 +1,11 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, waitFor } from '@testing-library/svelte';
-import blocks from '../index';
+import { blocksConfig, getBlockComponent, isAsyncBlock } from '../index';
 import ListingBlockView from './ListingBlockView.svelte';
-import { getVariationComponent, variationRegistry } from './variations/index';
+import { getVariationComponent, variationRegistry, isAsyncVariation } from './variations/index';
 import DefaultVariation from './variations/DefaultVariation.svelte';
 import SummaryVariation from './variations/SummaryVariation.svelte';
-import ImageGalleryVariation from './variations/ImageGalleryVariation.svelte';
 import type { ListingBlockData, ListingItem, ListingResponse, QuerystringQuery } from './types';
 
 // Mock the API module to avoid actual API calls in tests
@@ -25,11 +24,15 @@ vi.mock('./api', () => ({
 
 // Task Group 1: Core Infrastructure Tests
 describe('Listing Block - Block Registration', () => {
-	test('listing block is registered in blocks config', () => {
-		expect(blocks.listing).toBeDefined();
-		expect(blocks.listing.id).toBe('listing');
-		expect(blocks.listing.title).toBe('Listing');
-		expect(blocks.listing.view).toBe(ListingBlockView);
+	test('listing block is registered in blocks config', async () => {
+		expect(blocksConfig.listing).toBeDefined();
+		expect(blocksConfig.listing.id).toBe('listing');
+		expect(blocksConfig.listing.title).toBe('Listing');
+		// listing is now an async block
+		expect(isAsyncBlock('listing')).toBe(true);
+		const component = await getBlockComponent('listing');
+		expect(component).toBeDefined();
+		expect(typeof component).toBe('function');
 	});
 
 	test('ListingBlockView component is exported correctly', () => {
@@ -81,25 +84,30 @@ describe('Listing Block - Block Registration', () => {
 		expect(blockData.variation).toBe('default');
 	});
 
-	test('variation registry returns correct component for each variation type', () => {
+	test('variation registry returns correct component for each variation type', async () => {
 		// Test registry object structure
 		expect(variationRegistry).toBeDefined();
 		expect(typeof variationRegistry).toBe('object');
 
-		// Test 'default' variation
-		expect(getVariationComponent('default')).toBe(DefaultVariation);
+		// Test 'default' variation (sync)
+		expect(isAsyncVariation('default')).toBe(false);
+		expect(await getVariationComponent('default')).toBe(DefaultVariation);
 
-		// Test 'summary' variation
-		expect(getVariationComponent('summary')).toBe(SummaryVariation);
+		// Test 'summary' variation (sync)
+		expect(isAsyncVariation('summary')).toBe(false);
+		expect(await getVariationComponent('summary')).toBe(SummaryVariation);
 
-		// Test 'imageGallery' variation
-		expect(getVariationComponent('imageGallery')).toBe(ImageGalleryVariation);
+		// Test 'imageGallery' variation (async)
+		expect(isAsyncVariation('imageGallery')).toBe(true);
+		const imageGallery = await getVariationComponent('imageGallery');
+		expect(imageGallery).toBeDefined();
+		expect(typeof imageGallery).toBe('function');
 
 		// Test undefined variation returns default
-		expect(getVariationComponent(undefined)).toBe(DefaultVariation);
+		expect(await getVariationComponent(undefined)).toBe(DefaultVariation);
 
 		// Test unknown variation returns default
-		expect(getVariationComponent('nonexistent')).toBe(DefaultVariation);
+		expect(await getVariationComponent('nonexistent')).toBe(DefaultVariation);
 	});
 });
 

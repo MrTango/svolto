@@ -74,6 +74,44 @@ Implement a unified global styling system with three-tier container widths, modu
 - Scoped styles only for individual smaller components
 - Maintain Tailwind CSS 4 integration with `@import 'tailwindcss'`
 
+## Accessibility
+
+**Color Contrast Requirements (WCAG 2.1 AA)**
+
+All text must meet WCAG 2.1 Level AA contrast requirements:
+- Normal text (< 18pt or < 14pt bold): minimum 4.5:1 contrast ratio
+- Large text (≥ 18pt or ≥ 14pt bold): minimum 3:1 contrast ratio
+
+**Header/Footer Text Contrast**
+
+| Element | Text Color | Background | Contrast Ratio | Status |
+|---------|------------|------------|----------------|--------|
+| Header text | `#ffffff` (white) | `#006570` (teal) | ≈5.2:1 | ✓ AA |
+| Footer text | `#ffffff` (white) | `#005a63` (dark teal) | ≈5.8:1 | ✓ AA |
+| Logo text | `#ffffff` (white) | Gradient average | ≥5.2:1 | ✓ AA |
+| Footer links | `#ffffff` (white) | Gradient average | ≥5.2:1 | ✓ AA |
+| Nav items (header) | `#ffffff` (white) | `#006570` (teal) | ≈5.2:1 | ✓ AA |
+
+**Navigation Text Color Override**
+
+The navigation component uses `--nav-panel-bg` (#0097a7 teal) as text color by default. When placed on the header's teal background, this creates poor contrast (~1.7:1). The header must override navigation text colors to white for WCAG AA compliance.
+
+**Design Token Values (Accessible)**
+
+```css
+/* Header Gradient - WCAG AA compliant with white text */
+--header-gradient-start: #006570;  /* ≈5.2:1 contrast with white */
+--header-gradient-end: #005a63;    /* ≈5.8:1 contrast with white */
+
+/* Footer Gradient - WCAG AA compliant with white text */
+--footer-gradient-start: #006570;  /* ≈5.2:1 contrast with white */
+--footer-gradient-end: #005a63;    /* ≈5.8:1 contrast with white */
+
+/* Text colors on gradient backgrounds */
+--header-text-color: #ffffff;
+--footer-text-color: #ffffff;
+```
+
 ## Visual Design
 
 No visual assets provided for this specification.

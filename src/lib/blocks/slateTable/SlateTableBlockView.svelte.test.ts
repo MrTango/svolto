@@ -1,9 +1,9 @@
 import { describe, test, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent } from '@testing-library/svelte';
+import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import SlateTableBlockView from './SlateTableBlockView.svelte';
 import RenderBlocks from '$lib/RenderBlocks.svelte';
-import blocks from '$lib/blocks';
+import { blocksConfig } from '$lib/blocks';
 import { extractPlainText } from './SlateTableBlockView.svelte';
 
 const defaultProps = {
@@ -210,7 +210,7 @@ describe('Slate Table Block - Core Component', () => {
 		expect(td?.textContent).toBe('\u00A0');
 	});
 
-	test('block is registered and renders when @type is slateTable', () => {
+	test('block is registered and renders when @type is slateTable', async () => {
 		const content = {
 			blocks_layout: {
 				items: ['block-1']
@@ -239,14 +239,16 @@ describe('Slate Table Block - Core Component', () => {
 		const { container } = render(RenderBlocks, {
 			props: {
 				content,
-				blocksConfig: blocks,
+				blocksConfig,
 				pathname: '/test-path'
 			}
 		});
 
-		// Verify table block is rendered via RenderBlocks
-		const table = container.querySelector('table');
-		expect(table).toBeInTheDocument();
+		// Wait for async block component to load
+		await waitFor(() => {
+			const table = container.querySelector('table');
+			expect(table).toBeInTheDocument();
+		});
 		expect(screen.getByText('Test Header')).toBeInTheDocument();
 	});
 });
