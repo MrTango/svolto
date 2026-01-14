@@ -3,6 +3,13 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/svelte';
 import SlateBlockView from './SlateBlockView.svelte';
 
+const defaultProps = {
+	metadata: {},
+	properties: {},
+	path: '/',
+	blocksConfig: {}
+};
+
 // Task Group 1: Paragraph and default element handling tests
 describe('Slate Block - Paragraph Element', () => {
 	test('renders paragraph with correct p element', () => {
@@ -16,7 +23,7 @@ describe('Slate Block - Paragraph Element', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const paragraph = container.querySelector('p');
@@ -35,7 +42,7 @@ describe('Slate Block - Paragraph Element', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const paragraph = container.querySelector('p.slate-paragraph');
@@ -53,7 +60,7 @@ describe('Slate Block - Paragraph Element', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		// Should render as paragraph (fallback)
@@ -80,7 +87,7 @@ describe('Slate Block - Paragraph Element', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const paragraph = container.querySelector('p.slate-paragraph');
@@ -106,7 +113,7 @@ describe('Slate Block - Heading Elements', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const heading = container.querySelector('h4.slate-h4');
@@ -125,7 +132,7 @@ describe('Slate Block - Heading Elements', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const heading = container.querySelector('h5.slate-h5');
@@ -144,7 +151,7 @@ describe('Slate Block - Heading Elements', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const heading = container.querySelector('h6.slate-h6');
@@ -167,7 +174,7 @@ describe('Slate Block - Heading Elements', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		expect(container.querySelector('h2.slate-h2')).toBeInTheDocument();
@@ -193,7 +200,7 @@ describe('Slate Block - Inline Text Formatting', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const underline = container.querySelector('u.slate-underline');
@@ -217,12 +224,71 @@ describe('Slate Block - Inline Text Formatting', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const strikethrough = container.querySelector('s.slate-strikethrough');
 		expect(strikethrough).toBeInTheDocument();
 		expect(strikethrough).toHaveTextContent('strikethrough text');
+	});
+
+	test('Del renders del element with slate-del class', () => {
+		const data = {
+			value: [
+				{
+					type: 'p',
+					children: [
+						{
+							type: 'del',
+							children: [{ text: 'deleted text' }]
+						}
+					]
+				}
+			]
+		};
+
+		const { container } = render(SlateBlockView, {
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
+		});
+
+		const del = container.querySelector('del.slate-del');
+		expect(del).toBeInTheDocument();
+		expect(del).toHaveTextContent('deleted text');
+	});
+
+	test('Del with nested content renders correctly', () => {
+		const data = {
+			value: [
+				{
+					type: 'p',
+					children: [
+						{
+							type: 'del',
+							children: [
+								{ text: 'deleted ' },
+								{
+									type: 'strong',
+									children: [{ text: 'bold' }]
+								},
+								{ text: ' text' }
+							]
+						}
+					]
+				}
+			]
+		};
+
+		const { container } = render(SlateBlockView, {
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
+		});
+
+		const del = container.querySelector('del.slate-del');
+		expect(del).toBeInTheDocument();
+		expect(del).toHaveTextContent('deleted bold text');
+
+		const strongInsideDel = del?.querySelector('strong.slate-strong');
+		expect(strongInsideDel).toBeInTheDocument();
+		expect(strongInsideDel).toHaveTextContent('bold');
 	});
 
 	test('Sub renders sub element with slate-sub class', () => {
@@ -243,7 +309,7 @@ describe('Slate Block - Inline Text Formatting', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const sub = container.querySelector('sub.slate-sub');
@@ -268,7 +334,7 @@ describe('Slate Block - Inline Text Formatting', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const sup = container.querySelector('sup.slate-sup');
@@ -294,7 +360,7 @@ describe('Slate Block - Inline Text Formatting', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const code = container.querySelector('code.slate-code');
@@ -322,7 +388,7 @@ describe('Slate Block - Inline Text Formatting', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		expect(container.querySelector('strong.slate-strong')).toBeInTheDocument();
@@ -348,7 +414,7 @@ describe('Slate Block - Blockquote and Links', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const blockquote = container.querySelector('blockquote.slate-blockquote');
@@ -373,7 +439,7 @@ describe('Slate Block - Blockquote and Links', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const link = container.querySelector('a.slate-link');
@@ -399,7 +465,7 @@ describe('Slate Block - Blockquote and Links', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const link = container.querySelector('a.slate-link');
@@ -436,7 +502,7 @@ describe('Slate Block - Blockquote and Links', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const link = container.querySelector('a.slate-link');
@@ -468,7 +534,7 @@ describe('Slate Block - Lists', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const ol = container.querySelector('ol.slate-ol');
@@ -494,7 +560,7 @@ describe('Slate Block - Lists', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const ul = container.querySelector('ul.slate-ul');
@@ -528,7 +594,7 @@ describe('Slate Block - Lists', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const outerUl = container.querySelector('ul.slate-ul');
@@ -574,7 +640,7 @@ describe('Slate Block - Lists', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		expect(container.querySelector('h2.slate-h2')).toBeInTheDocument();
@@ -610,7 +676,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const em = container.querySelector('em.slate-em');
@@ -648,7 +714,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const blockquote = container.querySelector('blockquote.slate-blockquote');
@@ -684,7 +750,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const ol = container.querySelector('ol.slate-ol');
@@ -700,7 +766,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const slateBlock = container.querySelector('.block.slate');
@@ -730,7 +796,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const link = container.querySelector('a.slate-link');
@@ -763,7 +829,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const li = container.querySelector('li.slate-li');
@@ -791,7 +857,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const h3 = container.querySelector('h3.slate-h3');
@@ -838,7 +904,7 @@ describe('Slate Block - Integration & Edge Cases', () => {
 		};
 
 		const { container } = render(SlateBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const blockquote = container.querySelector('blockquote.slate-blockquote');

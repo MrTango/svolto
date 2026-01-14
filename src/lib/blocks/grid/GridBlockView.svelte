@@ -1,7 +1,20 @@
 <script lang="ts">
-	import DefaultBlockView from '$lib/blocks/DefaultBlockView.svelte';
+	import RenderBlock from '$lib/RenderBlock.svelte';
+	import type { ListingResponse } from '$lib/blocks/listing/types';
+	import type { BlockConfig } from '$lib/blocks/index';
 
-	let { key, id, data, metadata, properties, path, blocksConfig = {} } = $props();
+	let {
+		key,
+		id,
+		data,
+		metadata,
+		properties,
+		path,
+		blocksConfig = {} as Record<string, BlockConfig>,
+		listingData = {} as Record<string, ListingResponse>,
+		listingPages = {} as Record<string, number>,
+		paginatedBlockCount = 1
+	} = $props();
 
 	// Guard clause: return early if blocks_layout is undefined
 	const hasBlocksLayout = $derived(data?.blocks_layout !== undefined);
@@ -29,15 +42,18 @@
 	const showHeadline = $derived(!!data?.headline);
 
 	// Allowed nested block types (excludes gridBlock to prevent infinite nesting)
-	const allowedNestedBlocks = ['slate', 'image', 'teaser'];
+	const allowedNestedBlocks = new Set(['slate', 'image', 'teaser', 'listing', 'description', 'title', 'introduction']);
 
-	// Helper to get block component for a given block type
-	function getBlockComponent(blockType: string | undefined) {
-		if (!blockType || !allowedNestedBlocks.includes(blockType)) {
-			return DefaultBlockView;
+	// Create a filtered blocksConfig without gridBlock
+	const nestedBlocksConfig = $derived(() => {
+		const filtered: Record<string, BlockConfig> = {};
+		for (const [blockType, config] of Object.entries(blocksConfig)) {
+			if (allowedNestedBlocks.has(blockType)) {
+				filtered[blockType] = config;
+			}
 		}
-		return blocksConfig[blockType]?.view || DefaultBlockView;
-	}
+		return filtered;
+	});
 </script>
 
 {#if hasBlocksLayout}
@@ -48,19 +64,21 @@
 		{#each data.blocks_layout.items as columnId}
 			{@const blockData = data.blocks?.[columnId]}
 			{@const blockType = blockData?.['@type']}
-			{@const BlockComponent = getBlockComponent(blockType)}
+			{@const blockConfig = nestedBlocksConfig()[blockType]}
 			<div class="grid-column">
-				<div class="VoltoBlock">
-					<BlockComponent
-						key={columnId}
-						id={columnId}
-						data={blockData}
-						{metadata}
-						{properties}
-						{path}
-						{blocksConfig}
-					/>
-				</div>
+				<RenderBlock
+					block={columnId}
+					{blockData}
+					{blockType}
+					{blockConfig}
+					content={data}
+					pathname={path}
+					{metadata}
+					{listingData}
+					{listingPages}
+					{paginatedBlockCount}
+					blocksConfig={nestedBlocksConfig()}
+				/>
 			</div>
 		{/each}
 	</div>

@@ -1,3 +1,3 @@
 FROM plone/plone-backend:6.1
 
-COPY cors.zcml /app/etc/package-includes/
+COPY --chown=plone:plone cors-configure.zcml /app/etc/package-includes/

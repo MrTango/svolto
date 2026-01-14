@@ -1,25 +1,26 @@
-<script>
-	export let data = {};
-	// import RenderBlocks from '@plone/blocks/RenderBlocks/RenderBlocks';
-	// import { sveltify } from "svelte-preprocess-react";
+<script lang="ts">
 	import RenderBlocks from '$lib/RenderBlocks.svelte';
 	import config from '@plone/registry';
+
+	let { data } = $props();
 </script>
 
 <h1>Welcome to SvelteKit</h1>
 <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
 
-{#await data}
-	loading
-{:then content}
-	<article class="card">
-		<h2>{content['title']}</h2>
-		<p>{content['@id']}</p>
-		<h3>Volto Blocks</h3>
-		<RenderBlocks {content} blocksConfig={config.blocks.blocksConfig} pathname="/" />
-		<!-- <ReactRenderBlocks content={content} blocksConfig={config.blocks.blocksConfig} pathname="/" /> -->
-	</article>
-{/await}
+<article class="card">
+	<h2>{data['title']}</h2>
+	<p>{data['@id']}</p>
+	<h3>Volto Blocks</h3>
+	<RenderBlocks
+		content={data}
+		blocksConfig={config.blocks.blocksConfig}
+		pathname="/"
+		listingData={data.listingData}
+		listingPages={data.listingPages}
+		paginatedBlockCount={data.paginatedBlockCount}
+	/>
+</article>
 
 <style>
 	h1 {

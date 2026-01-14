@@ -9,6 +9,7 @@ Total Tasks: 14
 ## Current State
 
 The Table Block is fully implemented at:
+
 - Component: `src/lib/blocks/table/TableBlockView.svelte`
 - Tests: `src/lib/blocks/table/TableBlockView.svelte.test.ts`
 - Registration: `src/lib/blocks/index.ts` (key: `table`)
@@ -17,6 +18,7 @@ The Table Block is fully implemented at:
 ## Target State
 
 After completion:
+
 - Component: `src/lib/blocks/slateTable/SlateTableBlockView.svelte`
 - Tests: `src/lib/blocks/slateTable/SlateTableBlockView.svelte.test.ts`
 - Registration: `src/lib/blocks/index.ts` (key: `slateTable`)
@@ -40,6 +42,7 @@ After completion:
     - Test: `src/lib/blocks/slateTable/SlateTableBlockView.svelte.test.ts`
 
 **Acceptance Criteria:**
+
 - Directory renamed from `table` to `slateTable`
 - Component file renamed to `SlateTableBlockView.svelte`
 - Test file renamed to `SlateTableBlockView.svelte.test.ts`
@@ -70,6 +73,7 @@ After completion:
     - Run: `pnpm build` to check for compilation errors
 
 **Acceptance Criteria:**
+
 - Block wrapper uses class `block slateTable`
 - All modifier classes use `slateTable--` prefix
 - Component compiles without errors
@@ -94,6 +98,7 @@ After completion:
   - [x] 3.3 Verify block registration compiles correctly
 
 **Acceptance Criteria:**
+
 - Import path updated to new location
 - Block key is `slateTable`
 - Block id is `slateTable`
@@ -129,6 +134,7 @@ After completion:
     - Same for `descending` selector
 
 **Acceptance Criteria:**
+
 - All `.block.table` selectors changed to `.block.slateTable`
 - All `.table--*` modifier classes changed to `.slateTable--*`
 - CSS compiles without errors
@@ -160,6 +166,7 @@ After completion:
     - Change: `'Table Block - *'` to `'Slate Table Block - *'`
 
 **Acceptance Criteria:**
+
 - All imports reference new file names
 - All render calls use `SlateTableBlockView`
 - All CSS class assertions use `slateTable` prefix
@@ -188,6 +195,7 @@ After completion:
     - Expected: No formatting issues
 
 **Acceptance Criteria:**
+
 - All slate table block tests pass
 - No regressions in other tests
 - Build completes successfully
@@ -212,13 +220,13 @@ Recommended implementation sequence:
 
 Summary of all files that will be modified:
 
-| Original Path | New Path / Action |
-|--------------|-------------------|
-| `src/lib/blocks/table/` | Rename to `src/lib/blocks/slateTable/` |
-| `src/lib/blocks/table/TableBlockView.svelte` | Rename to `src/lib/blocks/slateTable/SlateTableBlockView.svelte` + update classes |
+| Original Path                                        | New Path / Action                                                                                    |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `src/lib/blocks/table/`                              | Rename to `src/lib/blocks/slateTable/`                                                               |
+| `src/lib/blocks/table/TableBlockView.svelte`         | Rename to `src/lib/blocks/slateTable/SlateTableBlockView.svelte` + update classes                    |
 | `src/lib/blocks/table/TableBlockView.svelte.test.ts` | Rename to `src/lib/blocks/slateTable/SlateTableBlockView.svelte.test.ts` + update imports/assertions |
-| `src/lib/blocks/index.ts` | Update import and registration |
-| `src/app.css` | Update all table CSS selectors |
+| `src/lib/blocks/index.ts`                            | Update import and registration                                                                       |
+| `src/app.css`                                        | Update all table CSS selectors                                                                       |
 
 ---
 

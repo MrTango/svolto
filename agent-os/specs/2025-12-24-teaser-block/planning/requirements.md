@@ -5,6 +5,7 @@
 Create/improve a teaser block component for Svolto (SvelteKit frontend for Plone CMS).
 
 Context:
+
 - Svolto is a SvelteKit-based frontend for rendering Plone CMS content
 - It serves as a Svelte alternative to Volto (React-based Plone frontend)
 - The project renders Volto Blocks content from a Plone backend with plone.restapi enabled
@@ -38,6 +39,7 @@ Context:
 
 **Q8:** What should the Event template include?
 **Answer:** The Event template should display:
+
 - Start date and time
 - End date and time
 - Only show time if it is NOT a whole day event
@@ -47,6 +49,7 @@ Context:
 ### Existing Code to Reference
 
 **Similar Features Identified:**
+
 - Current teaser block: `src/lib/blocks/teaser/TeaserBlockView.svelte`
 - Block registry pattern: `src/lib/blocks/index.ts`
 - Block rendering: `src/lib/RenderBlocks.svelte`
@@ -113,6 +116,7 @@ No follow-up questions were needed.
 ### Scope Boundaries
 
 **In Scope:**
+
 - Complete teaser block component with all alignment options
 - Responsive image support via picture/srcset
 - Mobile-responsive layout behavior
@@ -122,6 +126,7 @@ No follow-up questions were needed.
 - Volto-compatible CSS variable naming
 
 **Out of Scope:**
+
 - Editor/editing interface (Volto handles editing)
 - Other content-type templates beyond Event (future enhancement)
 - Custom image cropping or manipulation

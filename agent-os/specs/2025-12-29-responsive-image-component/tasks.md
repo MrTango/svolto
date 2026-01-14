@@ -204,13 +204,13 @@ Recommended implementation sequence:
 
 ## Key Files Reference
 
-| File | Purpose |
-|------|---------|
-| `src/lib/components/ResponsiveImage.svelte` | NEW - Reusable responsive image component |
-| `src/lib/blocks/image/ImageBlockView.svelte` | MODIFY - Use ResponsiveImage, remove srcset logic |
-| `src/lib/blocks/teaser/templates/DefaultTeaserTemplate.svelte` | MODIFY - Use ResponsiveImage |
-| `src/lib/blocks/teaser/templates/EventTeaserTemplate.svelte` | MODIFY - Use ResponsiveImage |
-| `src/lib/blocks/teaser/TeaserBlockView.svelte` | REFERENCE ONLY - Contains srcset pattern to extract |
+| File                                                           | Purpose                                             |
+| -------------------------------------------------------------- | --------------------------------------------------- |
+| `src/lib/components/ResponsiveImage.svelte`                    | NEW - Reusable responsive image component           |
+| `src/lib/blocks/image/ImageBlockView.svelte`                   | MODIFY - Use ResponsiveImage, remove srcset logic   |
+| `src/lib/blocks/teaser/templates/DefaultTeaserTemplate.svelte` | MODIFY - Use ResponsiveImage                        |
+| `src/lib/blocks/teaser/templates/EventTeaserTemplate.svelte`   | MODIFY - Use ResponsiveImage                        |
+| `src/lib/blocks/teaser/TeaserBlockView.svelte`                 | REFERENCE ONLY - Contains srcset pattern to extract |
 
 ## Technical Notes
 

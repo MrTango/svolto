@@ -1,7 +1,19 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render } from '@testing-library/svelte';
 import ImageBlockView from './ImageBlockView.svelte';
+import { lcpImageClaimed } from '$lib/stores/lcp-tracking';
+
+vi.mock('$app/environment', () => ({
+	browser: false
+}));
+
+const defaultProps = {
+	metadata: {},
+	properties: {},
+	path: '/',
+	blocksConfig: {}
+};
 
 describe('ImageBlockView - ResponsiveImage Integration', () => {
 	test('renders ResponsiveImage component with picture/source/img structure', () => {
@@ -26,10 +38,9 @@ describe('ImageBlockView - ResponsiveImage Integration', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
-		// Verify picture element is rendered (from ResponsiveImage)
 		const picture = container.querySelector('picture');
 		expect(picture).toBeInTheDocument();
 
@@ -40,7 +51,6 @@ describe('ImageBlockView - ResponsiveImage Integration', () => {
 		const img = container.querySelector('picture img');
 		expect(img).toBeInTheDocument();
 		expect(img).toHaveAttribute('alt', 'A sample image');
-		expect(img).toHaveAttribute('loading', 'lazy');
 	});
 
 	test('passes correct props from block data to ResponsiveImage', () => {
@@ -64,22 +74,18 @@ describe('ImageBlockView - ResponsiveImage Integration', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
-		// Verify srcset is constructed correctly from scales
 		const source = container.querySelector('picture source');
 		const srcset = source?.getAttribute('srcset') || '';
 
-		// Check that srcset contains width descriptors for each scale
 		expect(srcset).toContain('768w');
 		expect(srcset).toContain('200w');
 
-		// Check that paths are constructed correctly with baseUrl
 		expect(srcset).toContain('/Plone/my-page/@@images/image-768.jpeg');
 		expect(srcset).toContain('/Plone/my-page/@@images/image-200.jpeg');
 
-		// Verify alt text is passed correctly
 		const img = container.querySelector('picture img');
 		expect(img).toHaveAttribute('alt', 'Test alt text');
 	});
@@ -104,14 +110,12 @@ describe('ImageBlockView - ResponsiveImage Integration', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
-		// Verify wrapper element has both 'block' and 'image' classes
 		const wrapper = container.querySelector('p.block.image');
 		expect(wrapper).toBeInTheDocument();
 
-		// Verify picture element is inside the wrapper
 		const picture = wrapper?.querySelector('picture');
 		expect(picture).toBeInTheDocument();
 	});
@@ -142,10 +146,9 @@ describe('ImageBlockView - URL Normalization', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
-		// Verify srcset does NOT contain internal hostname
 		const source = container.querySelector('picture source');
 		const srcset = source?.getAttribute('srcset') || '';
 
@@ -153,7 +156,6 @@ describe('ImageBlockView - URL Normalization', () => {
 		expect(srcset).not.toContain('http://backend');
 		expect(srcset).toContain('/Plone/sample-page/dsc06510.jpg');
 
-		// Verify img src also does NOT contain internal hostname
 		const img = container.querySelector('picture img');
 		const src = img?.getAttribute('src') || '';
 
@@ -182,10 +184,9 @@ describe('ImageBlockView - URL Normalization', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
-		// Should still work with relative URLs
 		const source = container.querySelector('picture source');
 		const srcset = source?.getAttribute('srcset') || '';
 
@@ -212,7 +213,7 @@ describe('ImageBlockView - URL Normalization', () => {
 		};
 
 		const { container } = render(ImageBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const source = container.querySelector('picture source');
@@ -221,5 +222,89 @@ describe('ImageBlockView - URL Normalization', () => {
 		expect(srcset).not.toContain('localhost:8080');
 		expect(srcset).not.toContain('http://localhost');
 		expect(srcset).toContain('/Plone/test/image.png');
+	});
+});
+
+describe('ImageBlockView - LCP Optimization', () => {
+	beforeEach(() => {
+		lcpImageClaimed.reset();
+	});
+
+	test('first image has fetchpriority="high" and loading="eager"', () => {
+		const data = {
+			url: '/Plone/my-page',
+			alt: 'Hero image',
+			download: '@@images/image/fullsize',
+			image_scales: {
+				image: [
+					{
+						download: '@@images/image/fullsize',
+						width: 1200,
+						height: 800,
+						scales: {
+							large: { download: '@@images/image-768.jpeg', width: 768, height: 512 }
+						}
+					}
+				]
+			}
+		};
+
+		const { container } = render(ImageBlockView, {
+			props: { ...defaultProps, key: 'hero-key', id: 'hero-id', data }
+		});
+
+		const img = container.querySelector('picture img');
+		expect(img).toHaveAttribute('fetchpriority', 'high');
+		expect(img).toHaveAttribute('loading', 'eager');
+	});
+
+	test('second image has fetchpriority="auto" and loading="lazy"', () => {
+		const data1 = {
+			url: '/Plone/first-image',
+			alt: 'First image',
+			download: '@@images/image/fullsize',
+			image_scales: {
+				image: [
+					{
+						download: '@@images/image/fullsize',
+						width: 800,
+						height: 600,
+						scales: {
+							large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+						}
+					}
+				]
+			}
+		};
+
+		const data2 = {
+			url: '/Plone/second-image',
+			alt: 'Second image',
+			download: '@@images/image/fullsize',
+			image_scales: {
+				image: [
+					{
+						download: '@@images/image/fullsize',
+						width: 800,
+						height: 600,
+						scales: {
+							large: { download: '@@images/image-768.jpeg', width: 768, height: 576 }
+						}
+					}
+				]
+			}
+		};
+
+		render(ImageBlockView, {
+			props: { ...defaultProps, key: 'first-key', id: 'first-id', data: data1 }
+		});
+
+		const { container: container2 } = render(ImageBlockView, {
+			props: { ...defaultProps, key: 'second-key', id: 'second-id', data: data2 }
+		});
+
+		const img2 = container2.querySelector('picture img');
+		expect(img2).toHaveAttribute('fetchpriority', 'auto');
+		expect(img2).toHaveAttribute('loading', 'lazy');
 	});
 });

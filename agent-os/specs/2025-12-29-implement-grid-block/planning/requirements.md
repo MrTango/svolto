@@ -34,14 +34,17 @@ Implement the Grid Block for Svolto - a SvelteKit-based frontend for rendering P
 **Similar Features Identified:**
 
 - Feature: RenderBlocks - Path: `/workspace/src/lib/RenderBlocks.svelte`
+
   - Main block rendering loop that iterates over `blocks_layout.items` and renders appropriate block components
   - Will need to be reused/called recursively for nested blocks within grid columns
 
 - Feature: Block Registry - Path: `/workspace/src/lib/blocks/index.ts`
+
   - Block type registry with `{id, title, view}` configuration pattern
   - Grid block will be registered here following the same pattern
 
 - Feature: TeaserBlockView - Path: `/workspace/src/lib/blocks/teaser/TeaserBlockView.svelte`
+
   - Example of scoped CSS with CSS custom properties
   - Shows responsive flex layout patterns with alignment classes
   - Good reference for mobile-first responsive behavior

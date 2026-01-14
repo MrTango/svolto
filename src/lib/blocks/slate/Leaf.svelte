@@ -2,6 +2,7 @@
 	import { Text as SlateText } from 'slate';
 	import Blockquote from './Blockquote.svelte';
 	import Code from './Code.svelte';
+	import Del from './Del.svelte';
 	import Em from './Em.svelte';
 	import H2 from './H2.svelte';
 	import H3 from './H3.svelte';
@@ -21,9 +22,10 @@
 	import Ul from './Ul.svelte';
 	import Underline from './Underline.svelte';
 
-	let { node, parent } = $props();
+	let { node, parent, blockId = '' } = $props();
 
-	const NodeTypes: Record<string, { view: typeof P }> = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const NodeTypes: Record<string, { view: any }> = {
 		// Block elements
 		p: { view: P },
 		h2: { view: H2 },
@@ -41,6 +43,7 @@
 		em: { view: Em },
 		underline: { view: Underline },
 		strikethrough: { view: Strikethrough },
+		del: { view: Del },
 		sub: { view: Sub },
 		sup: { view: Sup },
 		code: { view: Code },
@@ -49,6 +52,8 @@
 	};
 
 	type NodeType = keyof typeof NodeTypes;
+
+	const HEADING_TYPES = ['h2', 'h3', 'h4', 'h5', 'h6'];
 
 	// Determine the node type from the node itself, not the parent
 	// Text nodes (with only 'text' property) get 'text' type
@@ -67,14 +72,27 @@
 	}
 
 	let SlateComponent = $derived(NodeTypes[nodeType].view);
+	let isHeading = $derived(HEADING_TYPES.includes(nodeType));
 </script>
 
-<SlateComponent {node} {parent}>
-	{#if SlateText.isText(node)}
-		{node.text}
-	{:else if node?.children}
-		{#each node.children as childNode}
-			<Leaf node={childNode} parent={node} />
-		{/each}
-	{/if}
-</SlateComponent>
+{#if isHeading}
+	<SlateComponent {node} {parent} {blockId}>
+		{#if SlateText.isText(node)}
+			{node.text}
+		{:else if node?.children}
+			{#each node.children as childNode}
+				<Leaf node={childNode} parent={node} {blockId} />
+			{/each}
+		{/if}
+	</SlateComponent>
+{:else}
+	<SlateComponent {node} {parent}>
+		{#if SlateText.isText(node)}
+			{node.text}
+		{:else if node?.children}
+			{#each node.children as childNode}
+				<Leaf node={childNode} parent={node} {blockId} />
+			{/each}
+		{/if}
+	</SlateComponent>
+{/if}

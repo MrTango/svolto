@@ -1,5 +1,4 @@
 services:
-
   backend:
     build:
       context: ./docker/backend
@@ -9,7 +8,7 @@ services:
     ports:
       - '8088:8080'
     networks:
-       - appsuite
+      - appsuite
     volumes:
       - backend_blobstorage:/data/blobstorage
     depends_on:
@@ -23,13 +22,13 @@ services:
       POSTGRES_PASSWORD: plone
       POSTGRES_DB: plone
     networks:
-       - appsuite
+      - appsuite
     ports:
       - '5432:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U plone -d plone"]
+      test: ['CMD-SHELL', 'pg_isready -U plone -d plone']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -40,7 +39,7 @@ services:
       - '3000:3000'
     restart: always
     networks:
-       - appsuite
+      - appsuite
     environment:
       # These are needed in a Docker environment since the
       # routing needs to be amended. You can point to the

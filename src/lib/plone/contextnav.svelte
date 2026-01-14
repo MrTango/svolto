@@ -1,10 +1,21 @@
-<script>
+<script lang="ts">
 	import Contextnavitem from '$lib/plone/contextnavitem.svelte';
-	export let contextNav;
-	let items = (contextNav && contextNav.items) || [];
+
+	interface ContextNavItem {
+		href?: string;
+		title?: string;
+		items?: ContextNavItem[];
+	}
+
+	interface ContextNavData {
+		items?: ContextNavItem[];
+	}
+
+	export let contextNav: ContextNavData | undefined = undefined;
+	let items: ContextNavItem[] = (contextNav && contextNav.items) || [];
 </script>
 
-<nav name="contextnav">
+<nav aria-label="contextnav">
 	<ul>
 		{#each items as item}
 			<Contextnavitem {item} />

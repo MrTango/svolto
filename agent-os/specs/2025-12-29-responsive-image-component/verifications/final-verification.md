@@ -20,6 +20,7 @@ The Responsive Image Component spec has been successfully implemented. All 4 tas
 ### Completed Tasks
 
 - [x] Task Group 1: Component Setup and Core Implementation
+
   - [x] 1.1 Write 3-5 focused tests for ResponsiveImage component
   - [x] 1.2 Create `src/lib/components/` directory structure
   - [x] 1.3 Create ResponsiveImage.svelte with Props interface
@@ -28,6 +29,7 @@ The Responsive Image Component spec has been successfully implemented. All 4 tas
   - [x] 1.6 Ensure ResponsiveImage component tests pass
 
 - [x] Task Group 2: ImageBlockView Integration
+
   - [x] 2.1 Write 2-3 focused tests for ImageBlockView using ResponsiveImage
   - [x] 2.2 Refactor ImageBlockView to use ResponsiveImage
   - [x] 2.3 Preserve wrapper element styling
@@ -35,6 +37,7 @@ The Responsive Image Component spec has been successfully implemented. All 4 tas
   - [x] 2.5 Ensure ImageBlockView integration tests pass
 
 - [x] Task Group 3: Teaser Templates Integration
+
   - [x] 3.1 Write 3-4 focused tests for Teaser templates using ResponsiveImage
   - [x] 3.2 Refactor DefaultTeaserTemplate to use ResponsiveImage
   - [x] 3.3 Update DefaultTeaserTemplate Props interface
@@ -117,15 +120,16 @@ The ResponsiveImage component provides the foundation for future completion of r
 
 ### Feature-Specific Test Breakdown
 
-| Test File | Tests | Status |
-|-----------|-------|--------|
-| `ResponsiveImage.svelte.test.ts` | 13 | Passing |
-| `ImageBlockView.svelte.test.ts` | 3 | Passing |
-| `TeaserTemplates.svelte.test.ts` | 4 | Passing |
+| Test File                        | Tests | Status  |
+| -------------------------------- | ----- | ------- |
+| `ResponsiveImage.svelte.test.ts` | 13    | Passing |
+| `ImageBlockView.svelte.test.ts`  | 3     | Passing |
+| `TeaserTemplates.svelte.test.ts` | 4     | Passing |
 
 ### Test Coverage Details
 
 **ResponsiveImage Component Tests (13 tests):**
+
 - Srcset generation from scales object with correct format
 - Srcset generation with single scale entry
 - Picture/source/img element structure rendering
@@ -141,11 +145,13 @@ The ResponsiveImage component provides the foundation for future completion of r
 - Undefined scales handling
 
 **ImageBlockView Integration Tests (3 tests):**
+
 - ResponsiveImage component rendering with picture/source/img structure
 - Correct props passed from block data
 - Wrapper element CSS class preservation
 
 **Teaser Templates Tests (4 tests):**
+
 - DefaultTeaserTemplate renders ResponsiveImage with scales
 - DefaultTeaserTemplate preserves image-wrapper div
 - EventTeaserTemplate renders ResponsiveImage with scales
@@ -170,6 +176,7 @@ None - all tests passing.
 **Status:** Issues Found (Pre-existing)
 
 The linting check reports formatting issues in:
+
 - `.pnpm-store/` - Package store files (not project code)
 - `.devcontainer/` - Dev container configuration
 - Various agent-os spec files (pre-existing from other specs)
@@ -201,15 +208,15 @@ The ResponsiveImage component implements a clean Props interface:
 
 ```typescript
 interface Props {
-  scales: Record<string, ScaleEntry> | undefined;
-  baseUrl: string;
-  alt: string;
-  src?: string;
-  sizes?: string;
-  width?: number;
-  height?: number;
-  loading?: 'lazy' | 'eager';
-  class?: string;
+	scales: Record<string, ScaleEntry> | undefined;
+	baseUrl: string;
+	alt: string;
+	src?: string;
+	sizes?: string;
+	width?: number;
+	height?: number;
+	loading?: 'lazy' | 'eager';
+	class?: string;
 }
 ```
 
@@ -237,6 +244,7 @@ The Responsive Image Component spec has been successfully implemented with all t
 **Final Status: PASSED WITH ISSUES**
 
 Issues noted are pre-existing and not related to this spec:
+
 - Pre-existing TypeScript errors in other files
 - Minor formatting issues that can be resolved with `pnpm format`
 

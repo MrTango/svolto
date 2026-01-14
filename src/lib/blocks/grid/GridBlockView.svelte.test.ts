@@ -1,8 +1,14 @@
 import { describe, test, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render } from '@testing-library/svelte';
+import { render, waitFor } from '@testing-library/svelte';
 import GridBlockView from './GridBlockView.svelte';
-import blocks from '$lib/blocks/index';
+import { blocksConfig } from '$lib/blocks/index';
+
+const defaultProps = {
+	metadata: {},
+	properties: {},
+	path: '/'
+};
 
 describe('GridBlockView - Component Foundation', () => {
 	test('renders grid with valid blocks_layout structure', () => {
@@ -23,7 +29,7 @@ describe('GridBlockView - Component Foundation', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -42,7 +48,7 @@ describe('GridBlockView - Component Foundation', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -64,7 +70,7 @@ describe('GridBlockView - Component Foundation', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const headline = container.querySelector('h2.headline');
@@ -87,7 +93,7 @@ describe('GridBlockView - Component Foundation', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const headline = container.querySelector('h2.headline');
@@ -106,7 +112,7 @@ describe('GridBlockView - Component Foundation', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -120,7 +126,7 @@ describe('GridBlockView - Component Foundation', () => {
 			blocks_layout: { items: ['col-1'] }
 		};
 		const { container: container1 } = render(GridBlockView, {
-			props: { key: 'test-1', id: 'test-1', data: oneColData }
+			props: { ...defaultProps, key: 'test-1', id: 'test-1', data: oneColData }
 		});
 		expect(container1.querySelector('.block.grid')).toHaveClass('one');
 
@@ -134,7 +140,7 @@ describe('GridBlockView - Component Foundation', () => {
 			blocks_layout: { items: ['col-1', 'col-2', 'col-3'] }
 		};
 		const { container: container3 } = render(GridBlockView, {
-			props: { key: 'test-3', id: 'test-3', data: threeColData }
+			props: { ...defaultProps, key: 'test-3', id: 'test-3', data: threeColData }
 		});
 		expect(container3.querySelector('.block.grid')).toHaveClass('three');
 
@@ -149,7 +155,7 @@ describe('GridBlockView - Component Foundation', () => {
 			blocks_layout: { items: ['col-1', 'col-2', 'col-3', 'col-4'] }
 		};
 		const { container: container4 } = render(GridBlockView, {
-			props: { key: 'test-4', id: 'test-4', data: fourColData }
+			props: { ...defaultProps, key: 'test-4', id: 'test-4', data: fourColData }
 		});
 		expect(container4.querySelector('.block.grid')).toHaveClass('four');
 	});
@@ -167,7 +173,7 @@ describe('GridBlockView - Component Foundation', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const columns = container.querySelectorAll('.grid-column');
@@ -185,7 +191,7 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -205,7 +211,7 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -226,7 +232,7 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -248,7 +254,7 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -289,9 +295,10 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 				key: 'test-key',
 				id: 'test-id',
 				data,
-				blocksConfig: blocks,
+				blocksConfig: blocksConfig,
 				path: '/test-path',
-				metadata: { title: 'Test Page' }
+				metadata: { title: 'Test Page' },
+				properties: {}
 			}
 		});
 
@@ -308,7 +315,7 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 	test('nested blocksConfig excludes gridBlock to prevent nested grids', () => {
 		// Create a mock blocksConfig that includes gridBlock
 		const mockBlocksConfigWithGrid = {
-			...blocks,
+			...blocksConfig,
 			gridBlock: {
 				id: 'gridBlock',
 				title: 'Grid',
@@ -342,7 +349,9 @@ describe('GridBlockView - Grid Layout and Nested Blocks', () => {
 				id: 'test-id',
 				data,
 				blocksConfig: mockBlocksConfigWithGrid,
-				path: '/test-path'
+				path: '/test-path',
+				metadata: {},
+				properties: {}
 			}
 		});
 
@@ -369,7 +378,7 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -390,7 +399,7 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const columns = container.querySelectorAll('.grid-column');
@@ -415,7 +424,7 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 			blocks_layout: { items: ['col-1', 'col-2'] }
 		};
 		const { container: container2 } = render(GridBlockView, {
-			props: { key: 'test-2', id: 'test-2', data: twoColData }
+			props: { ...defaultProps, key: 'test-2', id: 'test-2', data: twoColData }
 		});
 		expect(container2.querySelector('.block.grid.two')).toBeInTheDocument();
 
@@ -430,7 +439,7 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 			blocks_layout: { items: ['col-1', 'col-2', 'col-3', 'col-4'] }
 		};
 		const { container: container4 } = render(GridBlockView, {
-			props: { key: 'test-4', id: 'test-4', data: fourColData }
+			props: { ...defaultProps, key: 'test-4', id: 'test-4', data: fourColData }
 		});
 		expect(container4.querySelector('.block.grid.four')).toBeInTheDocument();
 	});
@@ -450,7 +459,7 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 		};
 
 		const { container } = render(GridBlockView, {
-			props: { key: 'test-key', id: 'test-id', data }
+			props: { ...defaultProps, key: 'test-key', id: 'test-id', data }
 		});
 
 		const gridBlock = container.querySelector('.block.grid');
@@ -463,6 +472,112 @@ describe('GridBlockView - Flexbox CSS and Responsive Layout', () => {
 		// Each column should be a direct child for flex-wrap to work correctly
 		columns?.forEach((column) => {
 			expect(column.parentElement).toBe(gridBlock);
+		});
+	});
+});
+
+describe('GridBlockView - Nested Listing Blocks', () => {
+	test('listing blocks render within grid columns', async () => {
+		// Create data with a listing block in a grid column
+		const data = {
+			blocks: {
+				'col-1': {
+					'@type': 'listing',
+					querystring: {
+						query: [{ i: 'portal_type', o: 'plone.app.querystring.operation.selection.any', v: ['Document'] }]
+					}
+				},
+				'col-2': {
+					'@type': 'slate',
+					value: [{ type: 'p', children: [{ text: 'Column 2 content' }] }]
+				}
+			},
+			blocks_layout: { items: ['col-1', 'col-2'] }
+		};
+
+		const { container } = render(GridBlockView, {
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				blocksConfig: blocksConfig,
+				path: '/test-path',
+				metadata: {},
+				properties: {}
+			}
+		});
+
+		// Verify grid renders with two columns
+		const columns = container.querySelectorAll('.grid-column');
+		expect(columns).toHaveLength(2);
+
+		// Verify that a VoltoBlock wrapper exists for each column
+		const voltoBlocks = container.querySelectorAll('.VoltoBlock');
+		expect(voltoBlocks).toHaveLength(2);
+
+		// Wait for async listing block component to load
+		await waitFor(() => {
+			const listingBlock = container.querySelector('.block.listing');
+			expect(listingBlock).toBeInTheDocument();
+		});
+	});
+
+	test('listing component receives correct props from grid', async () => {
+		// Create mock listing data to pass through
+		const listingData = {
+			'listing-1': {
+				items: [
+					{ '@id': 'http://example.com/doc1', '@type': 'Document', title: 'Test Doc 1' }
+				],
+				total: 1
+			}
+		};
+
+		const data = {
+			blocks: {
+				'listing-1': {
+					'@type': 'listing',
+					querystring: {
+						query: [{ i: 'portal_type', o: 'plone.app.querystring.operation.selection.any', v: ['Document'] }]
+					}
+				}
+			},
+			blocks_layout: { items: ['listing-1'] }
+		};
+
+		const { container } = render(GridBlockView, {
+			props: {
+				key: 'test-key',
+				id: 'test-id',
+				data,
+				blocksConfig: blocksConfig,
+				path: '/test-path',
+				metadata: {},
+				properties: {},
+				listingData,
+				listingPages: { 'listing-1': 1 },
+				paginatedBlockCount: 1
+			}
+		});
+
+		// Verify grid renders with one column
+		const columns = container.querySelectorAll('.grid-column');
+		expect(columns).toHaveLength(1);
+
+		// Wait for async listing block component to load
+		await waitFor(() => {
+			const listingBlock = container.querySelector('.block.listing');
+			expect(listingBlock).toBeInTheDocument();
+		});
+
+		// Wait for async variation loading to complete
+		// The listing should render the default variation content after loading
+		await waitFor(() => {
+			// After variation loads, either the content or empty state should show
+			// The loading spinner should no longer be in the document
+			const listingDefault = container.querySelector('.listing-default');
+			const listingEmpty = container.querySelector('.listing-empty');
+			expect(listingDefault || listingEmpty).toBeTruthy();
 		});
 	});
 });

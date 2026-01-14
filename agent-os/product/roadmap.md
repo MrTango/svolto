@@ -6,11 +6,11 @@
 2. [x] Description Block — Render content description/lead text with proper semantic markup `XS`
 3. [x] Text Block (Slate Complete) — Extend Slate renderer to support all inline styles, block quotes, code blocks, and nested structures `S`
 4. [x] Table Block — Render tables with header rows/columns, cell alignment, and responsive behavior `S`
-5. [ ] Video Block — Embed videos from YouTube, Vimeo, and self-hosted sources with responsive aspect ratios `S`
-6. [ ] Maps Block — Render embedded maps (Google Maps, OpenStreetMap) with configurable zoom and markers `S`
-7. [ ] HTML Block — Safely render raw HTML content with appropriate sanitization `XS`
-8. [ ] TOC Block — Generate table of contents from page headings with anchor links `S`
-9. [ ] Listing Block — Render content listings with multiple layout variations (summary, image gallery, news items) `M`
+5. [x] Video Block — Embed videos from YouTube, Vimeo, and self-hosted sources with responsive aspect ratios `S`
+6. [x] Maps Block — Render embedded maps (Google Maps, OpenStreetMap) with configurable zoom and markers `S`
+7. [x] HTML Block — Safely render raw HTML content with appropriate sanitization `XS`
+8. [x] TOC Block — Generate table of contents from page headings with anchor links `S`
+9. [x] Listing Block — Render content listings with multiple layout variations (summary, image gallery, news items) `M`
 10. [ ] Search Block — Display search interface with results rendering and faceted filtering support `M`
 
 ## Block Coverage: Volto Light Theme Blocks
@@ -38,16 +38,16 @@
 
 ## Navigation and Layout
 
-28. [ ] Main Navigation Enhancement — Multi-level navigation with mega menu support and mobile responsive behavior `M`
-29. [ ] Footer Component — Configurable footer with multiple column layouts and content slots `S`
-30. [ ] Header Component — Flexible header with logo, navigation, search, and utility area slots `S`
+28. [x] Main Navigation Enhancement — Multi-level navigation with mega menu support and mobile responsive behavior `M`
+29. [x] Footer Component — Configurable footer with multiple column layouts and content slots `S`
+30. [x] Header Component — Flexible header with logo, navigation, search, and utility area slots `S`
 31. [ ] Skip Links — Accessibility-focused skip navigation for keyboard users `XS`
-32. [ ] Language Switcher — Multi-language site support with language navigation component `S`
+32. [x] Language Switcher — Multi-language site support with language navigation component `S`
 
 ## Performance and Infrastructure
 
-33. [ ] Image Optimization Pipeline — Implement responsive images with srcset, lazy loading, and blur placeholders `M`
-34. [ ] Bundle Analysis and Optimization — Analyze and optimize chunk splitting for minimal initial load `S`
+33. [x] Image Optimization Pipeline — Implement responsive images with srcset, lazy loading, and blur placeholders `M`
+34. [x] Bundle Analysis and Optimization — Analyze and optimize chunk splitting for minimal initial load `S`
 35. [ ] Caching Strategy — Implement proper cache headers and stale-while-revalidate patterns `S`
 36. [ ] Error Boundaries — Graceful error handling with fallback UI for failed block renders `S`
 37. [ ] Loading States — Skeleton screens and loading indicators for async content `S`
