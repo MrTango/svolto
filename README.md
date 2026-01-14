@@ -25,11 +25,18 @@ docker compose up -d
 pnpm i
 ```
 
+copy the `example.env` to `.env` and make sure you have the correct settings in your .env file.
+If you are using the `.devcontainer` for the svolto frontend, then you need to adjust at least the API_PATH variable `API_PATH=http://backend:8080/Plone`.
 
 ```bash
 pnpm run dev
+```
 
-# or start the server and open the app in a new browser tab
+then open the browser at: http://localhost:5173/
+
+or start the server and open the app in a new browser tab like this
+
+```bash
 pnpm run dev -- --open
 ```
 
