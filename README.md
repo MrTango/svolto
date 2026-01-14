@@ -1,6 +1,6 @@
 # svolto - THIS IS AN EXPERIMENT FOR NOW!!!
 
-Svelte rendering of Volto Blocks content from hybrid CMS Plone
+SvelteKit UI for rendering content including Volto Blocks from the hybrid CMS Plone.
 You will need a Plone Backend with plone.restapi enabled and the Volto frontend.
 The content is managed by using the default Plone Frontend `Volto`.
 
