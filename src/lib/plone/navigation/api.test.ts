@@ -116,7 +116,7 @@ describe('Navigation API', () => {
 			expect(result.items).toEqual([]);
 		});
 
-		test('fetches from language-specific endpoint with path parameter', async () => {
+		test('fetches from /de language-specific endpoint with path parameter', async () => {
 			const mockResponse = {
 				items: [
 					{ '@id': 'http://localhost:8080/Plone/de/news', title: 'Nachrichten' },
@@ -132,6 +132,29 @@ describe('Navigation API', () => {
 
 			expect(globalThis.fetch).toHaveBeenCalledWith(
 				'http://localhost:8080/Plone/de/@navigation?expand.navigation.depth=3',
+				expect.objectContaining({
+					method: 'GET',
+					headers: { Accept: 'application/json' }
+				})
+			);
+		});
+
+		test('fetches from /en language-specific endpoint with path parameter', async () => {
+			const mockResponse = {
+				items: [
+					{ '@id': 'http://localhost:8080/Plone/en/news', title: 'News' },
+					{ '@id': 'http://localhost:8080/Plone/en/about', title: 'About Us' }
+				]
+			};
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: true,
+				json: () => Promise.resolve(mockResponse)
+			} as Response);
+
+			await fetchNavigation(DEFAULT_NAV_DEPTH, 'http://localhost:8080/Plone', '/en');
+
+			expect(globalThis.fetch).toHaveBeenCalledWith(
+				'http://localhost:8080/Plone/en/@navigation?expand.navigation.depth=3',
 				expect.objectContaining({
 					method: 'GET',
 					headers: { Accept: 'application/json' }
@@ -167,6 +190,33 @@ describe('Navigation API', () => {
 				'http://localhost:8080/Plone/@navigation?expand.navigation.depth=3',
 				expect.any(Object)
 			);
+		});
+
+		test('fetches from root when path is empty string', async () => {
+			const mockResponse = { items: [] };
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: true,
+				json: () => Promise.resolve(mockResponse)
+			} as Response);
+
+			await fetchNavigation(DEFAULT_NAV_DEPTH, 'http://localhost:8080/Plone', '');
+
+			expect(globalThis.fetch).toHaveBeenCalledWith(
+				'http://localhost:8080/Plone/@navigation?expand.navigation.depth=3',
+				expect.any(Object)
+			);
+		});
+
+		test('returns empty items when API fails with language path parameter', async () => {
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: false,
+				status: 404,
+				statusText: 'Not Found'
+			} as Response);
+
+			const result = await fetchNavigation(DEFAULT_NAV_DEPTH, 'http://localhost:8080/Plone', '/de');
+
+			expect(result.items).toEqual([]);
 		});
 
 		test('respects custom depth with path parameter', async () => {
