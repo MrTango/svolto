@@ -115,6 +115,96 @@ describe('Navigation API', () => {
 
 			expect(result.items).toEqual([]);
 		});
+
+		test('fetches from language-specific endpoint with path parameter', async () => {
+			const mockResponse = {
+				items: [
+					{ '@id': 'http://localhost:8080/Plone/de/news', title: 'Nachrichten' },
+					{ '@id': 'http://localhost:8080/Plone/de/about', title: 'Über uns' }
+				]
+			};
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: true,
+				json: () => Promise.resolve(mockResponse)
+			} as Response);
+
+			await fetchNavigation(DEFAULT_NAV_DEPTH, 'http://localhost:8080/Plone', '/de');
+
+			expect(globalThis.fetch).toHaveBeenCalledWith(
+				'http://localhost:8080/Plone/de/@navigation?expand.navigation.depth=3',
+				expect.objectContaining({
+					method: 'GET',
+					headers: { Accept: 'application/json' }
+				})
+			);
+		});
+
+		test('fetches from root when path is "/" (root path)', async () => {
+			const mockResponse = { items: [] };
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: true,
+				json: () => Promise.resolve(mockResponse)
+			} as Response);
+
+			await fetchNavigation(DEFAULT_NAV_DEPTH, 'http://localhost:8080/Plone', '/');
+
+			expect(globalThis.fetch).toHaveBeenCalledWith(
+				'http://localhost:8080/Plone/@navigation?expand.navigation.depth=3',
+				expect.any(Object)
+			);
+		});
+
+		test('fetches from root when path is undefined', async () => {
+			const mockResponse = { items: [] };
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: true,
+				json: () => Promise.resolve(mockResponse)
+			} as Response);
+
+			await fetchNavigation(DEFAULT_NAV_DEPTH, 'http://localhost:8080/Plone', undefined);
+
+			expect(globalThis.fetch).toHaveBeenCalledWith(
+				'http://localhost:8080/Plone/@navigation?expand.navigation.depth=3',
+				expect.any(Object)
+			);
+		});
+
+		test('respects custom depth with path parameter', async () => {
+			const mockResponse = { items: [] };
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: true,
+				json: () => Promise.resolve(mockResponse)
+			} as Response);
+
+			await fetchNavigation(5, 'http://localhost:8080/Plone', '/en');
+
+			expect(globalThis.fetch).toHaveBeenCalledWith(
+				'http://localhost:8080/Plone/en/@navigation?expand.navigation.depth=5',
+				expect.any(Object)
+			);
+		});
+
+		test('transforms language-specific response items correctly', async () => {
+			const mockResponse = {
+				items: [
+					{
+						'@id': 'http://localhost:8080/Plone/de/news',
+						title: 'Nachrichten',
+						items: [{ '@id': 'http://localhost:8080/Plone/de/news/article1', title: 'Artikel 1' }]
+					}
+				]
+			};
+			vi.mocked(globalThis.fetch).mockResolvedValue({
+				ok: true,
+				json: () => Promise.resolve(mockResponse)
+			} as Response);
+
+			const result = await fetchNavigation(DEFAULT_NAV_DEPTH, 'http://localhost:8080/Plone', '/de');
+
+			expect(result.items[0].href).toBe('/de/news');
+			expect(result.items[0].title).toBe('Nachrichten');
+			expect(result.items[0].items?.[0].href).toBe('/de/news/article1');
+		});
 	});
 
 	describe('transformNavItem', () => {

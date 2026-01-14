@@ -55,21 +55,30 @@ export function transformNavigation(items: PloneNavItem[], apiPath: string): Nav
  *
  * @param depth - Number of navigation levels to fetch (default: 3)
  * @param apiPathOverride - Optional API path for server-side use (overrides PUBLIC_API_PATH)
+ * @param path - Optional context path for language-specific navigation (e.g., '/de' or '/en')
  * @returns Promise resolving to NavigationData with transformed items
  */
 export async function fetchNavigation(
 	depth: number = DEFAULT_NAV_DEPTH,
-	apiPathOverride?: string
+	apiPathOverride?: string,
+	path?: string
 ): Promise<NavigationData> {
 	const apiPath = apiPathOverride ?? PUBLIC_API_PATH ?? '';
 
+	// Build navigation path: include language/context path if provided
+	// e.g., '/de' -> '/de/@navigation', '/' or undefined -> '/@navigation'
+	const navigationPath = path && path !== '/' ? path : '';
+
 	try {
-		const response = await fetch(`${apiPath}/@navigation?expand.navigation.depth=${depth}`, {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json'
+		const response = await fetch(
+			`${apiPath}${navigationPath}/@navigation?expand.navigation.depth=${depth}`,
+			{
+				method: 'GET',
+				headers: {
+					Accept: 'application/json'
+				}
 			}
-		});
+		);
 
 		if (!response.ok) {
 			throw new Error(`Navigation API request failed: ${response.status} ${response.statusText}`);
